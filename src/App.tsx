@@ -36,7 +36,7 @@ export function App() {
         },
     ])
 
-        // business logic
+        // BLL - business logic
 
     const removeTask = (taskId: number) => {
         const nextState = tasks.filter(t => t.id !== taskId)
@@ -46,7 +46,16 @@ export function App() {
 
     const changeTodoListFilter = (nextFilter: FilterValuesType) => {
         setFilter(nextFilter)
+    }
 
+    const createTask = (title: string) => {
+      const newTask: TaskType = {
+        id: 4,
+        title: title,
+        isDone: false  
+      }
+      const newArray: Array<TaskType> = [newTask, ...tasks]
+      setTasks(newArray)
     }
 
     //UI
@@ -61,7 +70,7 @@ export function App() {
 
     return (
         <div className="App">
-            <TodoList changeTodoListFilter={changeTodoListFilter} removeTask={removeTask} title={todolistTitle} tasks={filteredTask}/>
+            <TodoList changeTodoListFilter={changeTodoListFilter} removeTask={removeTask} title={todolistTitle} tasks={filteredTask} createTask={createTask}/>
         </div>
     );
 }
