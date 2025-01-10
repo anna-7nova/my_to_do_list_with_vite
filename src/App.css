@@ -1,0 +1,31 @@
+.App {
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.App > div {
+  margin-right: 50px;
+}
+
+.todoList {
+  background-color: #1A1A2F;
+  padding: 15px;
+  border: 2px solid #7A12FF;
+  border-radius: 5px;
+  margin: 10px;
+
+  color: #FFFFFF; 
+}
+
+input {
+  background-color: #242443;
+  border-radius: 10px;
+  border: 1px solid #242443;
+}
+
+button {
+  background-color: #7A12FF;
+  border-radius: 10px;
+  border: 1px solid #7A12FF;
+}
