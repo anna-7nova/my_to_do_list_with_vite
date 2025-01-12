@@ -8,7 +8,7 @@ import { FiltersButtons } from './FiltersButtons';
 type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId: number) => void
+    removeTask: (taskId: string) => void
     changeTodoListFilter: (nextFilter: FilterValuesType) => void
     createTask: () => void
 

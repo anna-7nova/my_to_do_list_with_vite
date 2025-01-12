@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
 import { TodoList } from './components/TodoList';
+import { v1 } from 'uuid';
 
 //CRUD
 // - repeat, duplicate
 // - create clear structure
 export type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -20,17 +21,17 @@ export function App() {
 
     const [tasks, setTasks] = useState<Array<TaskType>>([
         {
-            id: 1,
+            id: v1(),
             title: "HTML&CSS",
             isDone: true
         },
         {
-            id: 2,
+            id: v1(),
             title: "JS",
             isDone: true
         },
         {
-            id: 3,
+            id: v1(),
             title: "React",
             isDone: false
         },
@@ -38,7 +39,7 @@ export function App() {
 
         // BLL - business logic
 
-    const removeTask = (taskId: number) => {
+    const removeTask = (taskId: string) => {
         const nextState = tasks.filter(t => t.id !== taskId)
         setTasks(nextState)
         // console.log(tasks_1)
@@ -50,13 +51,15 @@ export function App() {
 
     const createTask = (title: string) => {
       const newTask: TaskType = {
-        id: 4,
+        id: v1(),
         title: title,
         isDone: false  
       }
       const newArray: Array<TaskType> = [newTask, ...tasks]
       setTasks(newArray)
     }
+
+    console.log(v1())
 
     //UI
     const [filter, setFilter] = useState<FilterValuesType>("all")
