@@ -15,13 +15,17 @@ export const AddForm = (props: AddFormType) => {
 
     const onClickHandler = () => {
         props.createTask(title)
-        setTitle("")
+        setTitle("") 
     }
+
+    const IsTitleNamePossible = title.length<=15 && title.length>0
 
     return (
         <div>
             <input onChange={onChangeHandler} value={title}/>
-            <Button title='+' onClickHandler={onClickHandler}/>
+            {!title.length && <div>enter your task</div>}           
+            {!IsTitleNamePossible && Boolean(title.length) && <div>until 15 letters</div>}
+            <Button isDisabled={!IsTitleNamePossible} title='+' onClickHandler={onClickHandler}/>
         </div>
     );
 }

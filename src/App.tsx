@@ -59,8 +59,6 @@ export function App() {
       setTasks(newArray)
     }
 
-    console.log(v1())
-
     //UI
     const [filter, setFilter] = useState<FilterValuesType>("all")
     let filteredTask: Array<TaskType> = tasks
