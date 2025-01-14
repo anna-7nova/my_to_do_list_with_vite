@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { Button } from './Button';
 
 type AddFormType = {
@@ -18,14 +18,22 @@ export const AddForm = (props: AddFormType) => {
         setTitle("") 
     }
 
-    const IsTitleNamePossible = title.length<=15 && title.length>0
+    const onKeyDownHandler = (event: KeyboardEvent<HTMLElement>) => {
+        if(event.key==="Enter" && !IsButtonDisabled){
+            onClickHandler()
+        }
+    }
+
+    const IsAddTitleNamePossible = title.length<=15
+
+    const IsButtonDisabled = !IsAddTitleNamePossible || !title.length
 
     return (
         <div>
-            <input onChange={onChangeHandler} value={title}/>
-            {!title.length && <div>enter your task</div>}           
-            {!IsTitleNamePossible && Boolean(title.length) && <div>until 15 letters</div>}
-            <Button isDisabled={!IsTitleNamePossible} title='+' onClickHandler={onClickHandler}/>
+            <input onChange={onChangeHandler} value={title} onKeyDown={onKeyDownHandler}/>
+            {!title.length && <div>enter task title</div>}           
+            {!IsAddTitleNamePossible && <div>task title is too long</div>}
+            <Button isDisabled={IsButtonDisabled} title='+' onClickHandler={onClickHandler} />
         </div>
     );
 }

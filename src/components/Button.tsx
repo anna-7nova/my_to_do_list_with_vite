@@ -7,7 +7,7 @@ type ButtonPropsType = {
 }
 
 export const Button = ({title, onClickHandler, isDisabled}: ButtonPropsType) => {
-    return <button disabled={isDisabled} onClick={onClickHandler}>{title}</button>
+    return <button disabled={isDisabled} onClick={onClickHandler} >{title}</button>
 }
 
 
