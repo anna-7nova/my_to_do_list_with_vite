@@ -8,13 +8,20 @@ type AddFormType = {
 export const AddForm = (props: AddFormType) => {
     const [title, setTitle] = useState<string>("")
     console.log(title)
+    const [error, setError] = useState<string | null>(null)
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        error && setError(null)
         setTitle(event.currentTarget.value)
     }
 
     const onClickHandler = () => {
-        props.createTask(title)
+        const trimmedTitle = title.trim()
+        if (trimmedTitle !== "") {
+            props.createTask(title.trim())
+        } else {
+            setError("Title is required")
+        }
         setTitle("") 
     }
 
@@ -30,8 +37,9 @@ export const AddForm = (props: AddFormType) => {
 
     return (
         <div>
-            <input onChange={onChangeHandler} value={title} onKeyDown={onKeyDownHandler}/>
-            {!title.length && <div>enter task title</div>}           
+            <input className={error ? "task-error" : ""} onChange={onChangeHandler} value={title} onKeyDown={onKeyDownHandler}/>
+            {error && <div style={{color: "#bd1d4d"}}>{error}</div>}
+            {!title.length && !error && <div>enter task title</div>}           
             {!IsAddTitleNamePossible && <div>task title is too long</div>}
             <Button isDisabled={IsButtonDisabled} title='+' onClickHandler={onClickHandler} />
         </div>

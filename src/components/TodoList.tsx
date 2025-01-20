@@ -10,7 +10,9 @@ type TodoListPropsType = {
     tasks: Array<TaskType>
     removeTask: (taskId: string) => void
     changeTodoListFilter: (nextFilter: FilterValuesType) => void
-    createTask: () => void
+    createTask: (title: string) => void
+    changeTaskStatus: (taskId: string, newStatus: boolean) => void
+    filter: FilterValuesType
 
 }
 
@@ -21,11 +23,12 @@ export const TodoList = (props: TodoListPropsType) => {
         : <ul>
             {
                 props.tasks.map(t => {
+                    const removeTaskHandler = () => props.removeTask(t.id)
                     return (
                         <li key={t.id}>
-                            <input type="checkbox" checked={t.isDone} /> 
-                            <span>{t.title}</span>
-                            <Button onClickHandler={() => props.removeTask(t.id)} title={"x"}/>
+                            <input type="checkbox" checked={t.isDone} onChange={(e)=>props.changeTaskStatus(t.id, e.currentTarget.checked)}/> 
+                            <span className={t.isDone ? "task-done" : "task"}>{t.title}</span>
+                            <Button onClickHandler={removeTaskHandler} title={"x"}/>
                         </li>
                         )
                 })
@@ -37,7 +40,7 @@ export const TodoList = (props: TodoListPropsType) => {
             <TodoComponentHeader title={props.title}/>
             <AddForm createTask={props.createTask}/>
             {taskList}
-            <FiltersButtons changeTodoListFilter={props.changeTodoListFilter}/>
+            <FiltersButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.filter}/>
         </div>
     );
 }

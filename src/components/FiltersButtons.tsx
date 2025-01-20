@@ -4,14 +4,15 @@ import { FilterValuesType } from '../App';
 
 type FilterButton = {
     changeTodoListFilter: (nextFilter: FilterValuesType) => void
+    filter: FilterValuesType
 }
 
-export const FiltersButtons = ({changeTodoListFilter}: FilterButton) => {
+export const FiltersButtons = ({changeTodoListFilter, filter}: FilterButton) => {
     return (
         <div>
-                <Button onClickHandler={() => changeTodoListFilter("all")} title='All'/>
-                <Button onClickHandler={() => changeTodoListFilter("active")} title='Active'/>
-                <Button onClickHandler={() => changeTodoListFilter("completed")} title='Completed'/>
+                <Button className={filter==="all" ? "filtered-button" : ""} onClickHandler={() => changeTodoListFilter("all")} title='All'/>
+                <Button className={filter==="active" ? "filtered-button" : ""} onClickHandler={() => changeTodoListFilter("active")} title='Active'/>
+                <Button className={filter==="completed" ? "filtered-button" : ""} onClickHandler={() => changeTodoListFilter("completed")} title='Completed'/>
             </div>
     );
 }
