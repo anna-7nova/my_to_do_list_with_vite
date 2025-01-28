@@ -6,6 +6,7 @@ import { AddForm } from './AddForm';
 import { FiltersButtons } from './FiltersButtons';
 
 type TodoListPropsType = {
+    todolistId: string
     title: string
     tasks: Array<TaskType>
     removeTask: (taskId: string) => void
