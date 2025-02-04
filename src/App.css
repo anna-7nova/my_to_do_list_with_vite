@@ -4,6 +4,11 @@
   flex-wrap: wrap;
 }
 
+.container {
+  display: flex;
+  align-items: center;
+}
+
 .App > div {
   margin-right: 50px;
 }

@@ -1,8 +1,9 @@
-import React, { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { Button } from './Button';
 
 type AddFormType = {
-    createTask: (title: string) => void
+    createTask: (title: string, todolistId: string) => void
+    todolistId: string
 }
 
 export const AddForm = (props: AddFormType) => {
@@ -18,7 +19,7 @@ export const AddForm = (props: AddFormType) => {
     const onClickHandler = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle !== "") {
-            props.createTask(title.trim())
+            props.createTask(title.trim(), props.todolistId)
         } else {
             setError("Title is required")
         }
@@ -38,10 +39,10 @@ export const AddForm = (props: AddFormType) => {
     return (
         <div>
             <input className={error ? "task-error" : ""} onChange={onChangeHandler} value={title} onKeyDown={onKeyDownHandler}/>
+            <Button isDisabled={IsButtonDisabled} title='+' onClickHandler={onClickHandler} />
             {error && <div style={{color: "#bd1d4d"}}>{error}</div>}
             {!title.length && !error && <div>enter task title</div>}           
             {!IsAddTitleNamePossible && <div>task title is too long</div>}
-            <Button isDisabled={IsButtonDisabled} title='+' onClickHandler={onClickHandler} />
         </div>
     );
 }
