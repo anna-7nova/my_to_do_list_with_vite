@@ -10,7 +10,7 @@ type TodoListPropsType = {
     tasks: Array<TaskType>
     removeTask: (taskId: string, todolistId: string) => void
     changeTodoListFilter: (todolistId: string, filter: FilterValuesType) => void
-    createTask: (title: string, todolistId: string) => void
+    createTask: (title: string, itemId: string) => void
     changeTaskStatus: (taskId: string, newStatus: boolean, todolistId: string) => void
     removeTodoList: (todolistId: string) => void
 }
@@ -38,7 +38,7 @@ export const TodoList = (props: TodoListPropsType) => {
     return (
         <div className="todoList">
             <TodoComponentHeader title={props.todolist.title} onClick={()=>props.removeTodoList(props.todolist.id)}/>
-            <AddForm createTask={props.createTask} todolistId={props.todolist.id} />
+            <AddForm createNewItem={props.createTask} itemId={props.todolist.id} />
             {taskList}
             <FiltersButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.todolist.filter} todolistsId={props.todolist.id} />
         </div>

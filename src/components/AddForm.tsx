@@ -2,8 +2,8 @@ import { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { Button } from './Button';
 
 type AddFormType = {
-    createTask: (title: string, todolistId: string) => void
-    todolistId: string
+    createNewItem: (title: string, itemId: string) => void
+    itemId: string
 }
 
 export const AddForm = (props: AddFormType) => {
@@ -19,7 +19,7 @@ export const AddForm = (props: AddFormType) => {
     const onClickHandler = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle !== "") {
-            props.createTask(title.trim(), props.todolistId)
+            props.createNewItem(title.trim(), props.itemId)
         } else {
             setError("Title is required")
         }
