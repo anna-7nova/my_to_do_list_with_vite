@@ -2,8 +2,7 @@ import { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { Button } from './Button';
 
 type AddFormType = {
-    createNewItem: (title: string, itemId: string) => void
-    itemId: string
+    createNewItem: (title: string) => void
 }
 
 export const AddForm = (props: AddFormType) => {
@@ -19,7 +18,7 @@ export const AddForm = (props: AddFormType) => {
     const onClickHandler = () => {
         const trimmedTitle = title.trim()
         if (trimmedTitle !== "") {
-            props.createNewItem(title.trim(), props.itemId)
+            props.createNewItem(title.trim())
         } else {
             setError("Title is required")
         }
