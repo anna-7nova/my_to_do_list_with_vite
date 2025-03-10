@@ -27,11 +27,10 @@ export const TodoList = (props: TodoListPropsType) => {
                 props.tasks.map(t => {
                     const removeTaskHandler = () => props.removeTask(t.id, props.todolist.id)
                     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(t.id, e.currentTarget.checked, props.todolist.id)
-                    const onClickHandler = (value: string) => props.changeTaskTitle(props.todolist.id, t.id, value)
                     return (
                         <li key={t.id}>
                             <input type="checkbox" checked={t.isDone} onChange={changeTaskStatusHandler} />
-                            <EditableSpan title={t.title} onClick={onClickHandler} />
+                            <EditableSpan title={t.title} onClick={(value: string) => onClickHandler(t.id, value)} />
                             <Button onClickHandler={removeTaskHandler} title={"x"} />
                         </li>
                     )
@@ -42,7 +41,7 @@ export const TodoList = (props: TodoListPropsType) => {
     const removeTodoListHandler = () => props.removeTodoList(props.todolist.id)
     const changeTodoListTitleHandler = (title: string) => props.changeTodoListTitle(props.todolist.id, title)
     const addNewTaskHandler = (title: string) => props.createTask(title, props.todolist.id)
-
+    const onClickHandler = (taskId: string, value: string) => props.changeTaskTitle(props.todolist.id, taskId, value)
     return (
         <div className="todoList">
             <TodoComponentHeader title={props.todolist.title} onClick={removeTodoListHandler} onChange={changeTodoListTitleHandler} />

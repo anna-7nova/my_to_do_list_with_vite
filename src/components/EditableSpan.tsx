@@ -11,12 +11,11 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [value, setValue] = useState(props.title)
 
-    const onDoubleClickHandler = ()=> {
-        setEditMode(true)
-    }
-    const onBlurHandler = ()=> {
-        setEditMode(false)
+    const onClickHandler = ()=> {
+        setEditMode(!editMode)
+        if(editMode) {
         props.onClick(value)
+        }
     }
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>)=> {
@@ -24,8 +23,8 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
     }
     return (
         editMode
-        ?<input onChange={onChangeHandler} value={value} onBlur={onBlurHandler} autoFocus/>
-        :<span onDoubleClick={onDoubleClickHandler}>{props.title}</span>
+        ?<input onChange={onChangeHandler} value={value} onBlur={onClickHandler} autoFocus/>
+        :<span onDoubleClick={onClickHandler}>{props.title}</span>
     );
 }
 
