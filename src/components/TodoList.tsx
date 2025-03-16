@@ -1,10 +1,17 @@
 import { FilterValuesType, TaskType, TodolistType } from '../App';
-import { Button } from './Button';
 import { TodoComponentHeader } from './TodoComponentHeader'
 import { AddForm } from './AddForm';
 import { FiltersButtons } from './FiltersButtons';
 import { ChangeEvent } from 'react';
 import { EditableSpan } from './EditableSpan';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Checkbox from '@mui/material/Checkbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Paper from '@mui/material/Paper';
 
 type TodoListPropsType = {
     todolist: TodolistType
@@ -22,21 +29,23 @@ export const TodoList = (props: TodoListPropsType) => {
     //условный рендеринг
     const taskList = props.tasks.length === 0
         ? <span>List is empty</span>
-        : <ul>
+        : <List>
             {
                 props.tasks.map(t => {
                     const removeTaskHandler = () => props.removeTask(t.id, props.todolist.id)
                     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(t.id, e.currentTarget.checked, props.todolist.id)
                     return (
-                        <li key={t.id}>
-                            <input type="checkbox" checked={t.isDone} onChange={changeTaskStatusHandler} />
+                        <ListItem key={t.id}>
+                            <Checkbox checked={t.isDone} onChange={changeTaskStatusHandler} />
                             <EditableSpan title={t.title} onClick={(value: string) => onClickHandler(t.id, value)} />
-                            <Button onClickHandler={removeTaskHandler} title={"x"} />
-                        </li>
+                            <IconButton onClick={removeTaskHandler} aria-label="delete">
+                                <DeleteIcon />
+                            </IconButton>
+                        </ListItem>
                     )
                 })
             }
-        </ul>
+        </List>
     //handlers
     const removeTodoListHandler = () => props.removeTodoList(props.todolist.id)
     const changeTodoListTitleHandler = (title: string) => props.changeTodoListTitle(props.todolist.id, title)
@@ -44,10 +53,16 @@ export const TodoList = (props: TodoListPropsType) => {
     const onClickHandler = (taskId: string, value: string) => props.changeTaskTitle(props.todolist.id, taskId, value)
     return (
         <div className="todoList">
+            <Paper elevation={5}>
+            <Card variant="outlined" sx={{ backgroundColor: '#d9d9d96b'}}>
+            <CardContent>
             <TodoComponentHeader title={props.todolist.title} onClick={removeTodoListHandler} onChange={changeTodoListTitleHandler} />
             <AddForm createNewItem={addNewTaskHandler} />
             {taskList}
             <FiltersButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.todolist.filter} todolistsId={props.todolist.id} />
+            </CardContent>
+            </Card>
+            </Paper>
         </div>
     );
 }

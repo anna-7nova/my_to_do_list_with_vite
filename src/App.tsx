@@ -3,6 +3,9 @@ import './App.css';
 import { TodoList } from './components/TodoList';
 import { v1 } from 'uuid';
 import { AddForm } from './components/AddForm';
+import ButtonAppBar from './components/ButtonAppBar';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 //CRUD
 // - repeat, duplicate
@@ -32,7 +35,7 @@ export function App() {
 
     const [todolists, setTodolists] = useState<Array<TodolistType>>([
         { id: todolistId1, title: "What to learn", filter: "all" },
-        { id: todolistId2, title: "What to buy", filter: "all" },
+        { id: todolistId2, title: "What to improve", filter: "all" },
     ]
     )
 
@@ -57,17 +60,17 @@ export function App() {
         [todolistId2]: [
             {
                 id: v1(),
-                title: "Milk",
+                title: "English",
                 isDone: true
             },
             {
                 id: v1(),
-                title: "Water",
+                title: "CV",
                 isDone: true
             },
             {
                 id: v1(),
-                title: "Juice",
+                title: "Cover letter",
                 isDone: false
             },
         ],
@@ -104,12 +107,12 @@ export function App() {
 
     const createNewTodoList = (title: string) => {
         const id = v1()
-        const newTodoList: TodolistType  = { id, title, filter: "all" }
+        const newTodoList: TodolistType = { id, title, filter: "all" }
         setTodolists([newTodoList, ...todolists])
-        setTasks({ ...tasks, [id] : [] })
+        setTasks({ ...tasks, [id]: [] })
     }
 
-    const createNewTodoListHandler = (title: string)=>createNewTodoList(title)
+    const createNewTodoListHandler = (title: string) => createNewTodoList(title)
 
     const changeTaskStatus = (taskId: string, newStatus: boolean, todolistId: string) => {
         const todolistTasks = tasks[todolistId]
@@ -118,11 +121,11 @@ export function App() {
     }
 
     const changeTodoListTitle = (todolistId: string, title: string) => {
-        setTodolists(todolists.map(el=> el.id ===todolistId ? {...el, title} : el))
+        setTodolists(todolists.map(el => el.id === todolistId ? { ...el, title } : el))
     }
 
     const changeTaskTitle = (todolistId: string, itemId: string, title: string) => {
-        setTasks({...tasks, [todolistId] : tasks[todolistId].map(el => el.id===itemId ? {...el, title} : el)})
+        setTasks({ ...tasks, [todolistId]: tasks[todolistId].map(el => el.id === itemId ? { ...el, title } : el) })
     }
 
     //UI
@@ -153,8 +156,15 @@ export function App() {
 
     return (
         <div className="App">
-            <AddForm createNewItem={createNewTodoListHandler} />
-            {todolistComponents}
+            <Container fixed >
+                <ButtonAppBar />
+                <Grid container sx={{ mb: "15px"}}>
+                    <AddForm createNewItem={createNewTodoListHandler} />
+                </Grid>
+                <Grid container sx={{ gap: "15px"}}>
+                    {todolistComponents}
+                </Grid>
+            </Container>
         </div>
     );
 }

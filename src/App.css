@@ -1,19 +1,20 @@
 .App {
-  padding: 30px;
+/* width: 100vw; */
+}
+
+/* .Container {
+  padding: 20px;
   display: flex;
   flex-wrap: wrap;
+  /* display: flex; */
+  /* align-items: center;  */
 }
 
-.container {
-  display: flex;
-  align-items: center;
-}
-
-.App > div {
+.Container > div {
   margin-right: 50px;
-}
+} */
 
-.todoList {
+/* .todoList {
   background-color: #1A1A2F;
   padding: 15px;
   border: 2px solid #7A12FF;
@@ -54,4 +55,4 @@ button {
 .task-error {
   border: 2px solid #bd1d4d;
   outline: none
-}
+} */

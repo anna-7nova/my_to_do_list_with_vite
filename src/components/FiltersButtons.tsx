@@ -1,4 +1,4 @@
-import { Button } from './Button';
+import Button from '@mui/material/Button';
 import { FilterValuesType } from '../App';
 
 type FilterButton = {
@@ -7,16 +7,16 @@ type FilterButton = {
     todolistsId: string
 }
 
-export const FiltersButtons = ({changeTodoListFilter, filter, todolistsId}: FilterButton) => {
+export const FiltersButtons = ({ changeTodoListFilter, filter, todolistsId }: FilterButton) => {
     const changeTodoListFilterHandler = (filter: FilterValuesType) => {
-        changeTodoListFilter( todolistsId, filter)
+        changeTodoListFilter(todolistsId, filter)
     }
     return (
         <div>
-                <Button className={filter==="all" ? "filtered-button" : ""} onClickHandler={() => changeTodoListFilterHandler("all")} title='All'/>
-                <Button className={filter==="active" ? "filtered-button" : ""} onClickHandler={() => changeTodoListFilterHandler("active")} title='Active'/>
-                <Button className={filter==="completed" ? "filtered-button" : ""} onClickHandler={() => changeTodoListFilterHandler("completed")} title='Completed'/>
-            </div>
+            <Button onClick={() => changeTodoListFilterHandler("all")} variant={filter === "all" ? "contained" : "outlined"}>All</Button>
+            <Button onClick={() => changeTodoListFilterHandler("active")} variant={filter === "active" ? "contained" : "outlined"}>Active</Button>
+            <Button onClick={() => changeTodoListFilterHandler("completed")} variant={filter === "completed" ? "contained" : "outlined"}>Completed</Button>
+        </div>
     );
 }
 

@@ -1,17 +1,27 @@
 import { ChangeEvent, useState, KeyboardEvent } from 'react';
-import { Button } from './Button';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 type AddFormType = {
     createNewItem: (title: string) => void
 }
 
 export const AddForm = (props: AddFormType) => {
+    //styles
+    const buttonStyled = {
+        height: "40px",
+        minHeight: "40px",
+        minWidth: "40px",
+        width: "40px"
+
+    }
+
     const [title, setTitle] = useState<string>("")
     console.log(title)
-    const [error, setError] = useState<string | null>(null)
+    const [errorState, setErrorState] = useState<string | null>(null)
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        error && setError(null)
+        errorState && setErrorState(null)
         setTitle(event.currentTarget.value)
     }
 
@@ -20,28 +30,34 @@ export const AddForm = (props: AddFormType) => {
         if (trimmedTitle !== "") {
             props.createNewItem(title.trim())
         } else {
-            setError("Title is required")
+            setErrorState("Title is required")
         }
-        setTitle("") 
+        setTitle("")
     }
 
     const onKeyDownHandler = (event: KeyboardEvent<HTMLElement>) => {
-        if(event.key==="Enter" && !IsButtonDisabled){
+        if (event.key === "Enter" && !IsButtonDisabled) {
             onClickHandler()
         }
     }
 
-    const IsAddTitleNamePossible = title.length<=15
+    const IsAddTitleNamePossible = title.length <= 15
 
     const IsButtonDisabled = !IsAddTitleNamePossible || !title.length
 
     return (
         <div>
-            <input className={error ? "task-error" : ""} onChange={onChangeHandler} value={title} onKeyDown={onKeyDownHandler}/>
-            <Button isDisabled={IsButtonDisabled} title='+' onClickHandler={onClickHandler} />
-            {error && <div style={{color: "#bd1d4d"}}>{error}</div>}
-            {!title.length && !error && <div>enter task title</div>}           
-            {!IsAddTitleNamePossible && <div>task title is too long</div>}
+            <TextField 
+            error={IsButtonDisabled&&title.length>0} 
+            onChange={onChangeHandler} 
+            onKeyDown={onKeyDownHandler} 
+            id={"outlined-basic"} 
+            label={IsAddTitleNamePossible?"Please, type the title": "the title is too long"} 
+            variant="outlined" 
+            size={"small"}
+            value={title}
+            />
+            <Button onClick={onClickHandler} variant="contained" disabled={IsButtonDisabled} sx={buttonStyled}>+</Button>
         </div>
     );
 }
