@@ -1,6 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
-import { TaskType } from '../App';
-import { AddForm } from './AddForm';
+import{ ChangeEvent, useState } from 'react';
 
 export type EditableSpanPropsType = {
     title: string

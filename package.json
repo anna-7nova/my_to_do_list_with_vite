@@ -1,17 +1,17 @@
 {
   "name": "todolist-03",
+  "homepage": "https://anna-7nova.github.io/my_to_do_list_with_vite",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port 3000",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build --base=./",
     "test": "vitest",
     "preview": "vite preview",
     "predeploy": "pnpm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://anna-7nova.github.io/my_to_do_list_with_vite",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
