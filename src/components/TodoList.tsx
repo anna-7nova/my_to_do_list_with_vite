@@ -12,6 +12,7 @@ import ListItem from '@mui/material/ListItem';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
+import { cardStyle, listItemStylesSx } from './TodoList.styles';
 
 type TodoListPropsType = {
     todolist: TodolistType
@@ -35,9 +36,12 @@ export const TodoList = (props: TodoListPropsType) => {
                     const removeTaskHandler = () => props.removeTask(t.id, props.todolist.id)
                     const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(t.id, e.currentTarget.checked, props.todolist.id)
                     return (
-                        <ListItem key={t.id}>
-                            <Checkbox checked={t.isDone} onChange={changeTaskStatusHandler} />
-                            <EditableSpan title={t.title} onClick={(value: string) => onClickHandler(t.id, value)} />
+                        <ListItem key={t.id} 
+                        sx={listItemStylesSx(t.isDone)}>
+                            <div>
+                                <Checkbox checked={t.isDone} onChange={changeTaskStatusHandler} />
+                                <EditableSpan title={t.title} onClick={(value: string) => onClickHandler(t.id, value)} />
+                            </div>
                             <IconButton onClick={removeTaskHandler} aria-label="delete">
                                 <DeleteIcon />
                             </IconButton>
@@ -54,14 +58,14 @@ export const TodoList = (props: TodoListPropsType) => {
     return (
         <div className="todoList">
             <Paper elevation={5}>
-            <Card variant="outlined" sx={{ backgroundColor: '#d9d9d96b'}}>
-            <CardContent>
-            <TodoComponentHeader title={props.todolist.title} onClick={removeTodoListHandler} onChange={changeTodoListTitleHandler} />
-            <AddForm createNewItem={addNewTaskHandler} />
-            {taskList}
-            <FiltersButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.todolist.filter} todolistsId={props.todolist.id} />
-            </CardContent>
-            </Card>
+                <Card variant="outlined" sx={cardStyle}>
+                    <CardContent>
+                        <TodoComponentHeader title={props.todolist.title} onClick={removeTodoListHandler} onChange={changeTodoListTitleHandler} />
+                        <AddForm createNewItem={addNewTaskHandler} />
+                        {taskList}
+                        <FiltersButtons changeTodoListFilter={props.changeTodoListFilter} filter={props.todolist.filter} todolistsId={props.todolist.id} />
+                    </CardContent>
+                </Card>
             </Paper>
         </div>
     );

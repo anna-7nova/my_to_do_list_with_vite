@@ -6,6 +6,8 @@ import { AddForm } from './components/AddForm';
 import ButtonAppBar from './components/ButtonAppBar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 //CRUD
 // - repeat, duplicate
@@ -29,6 +31,19 @@ export type TasksType = {
 }
 
 export function App() {
+    //theme
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: '#9EC0D9',
+            },
+        }
+    });
+
+    // const changeMoode = () => {
+
+    // }
+
     // data
     const todolistId1 = v1()
     const todolistId2 = v1()
@@ -156,15 +171,18 @@ export function App() {
 
     return (
         <div className="App">
-            <Container fixed >
-                <ButtonAppBar />
-                <Grid container sx={{ mb: "15px"}}>
-                    <AddForm createNewItem={createNewTodoListHandler} />
-                </Grid>
-                <Grid container sx={{ gap: "15px"}}>
-                    {todolistComponents}
-                </Grid>
-            </Container>
+            <ThemeProvider theme={theme} defaultMode="light">
+                <Container fixed >
+                    <ButtonAppBar />
+                    <Grid container sx={{ mb: "15px" }}>
+                        <AddForm createNewItem={createNewTodoListHandler} />
+                    </Grid>
+                    <Grid container sx={{ gap: "15px" }}>
+                        {todolistComponents}
+                    </Grid>
+                </Container>
+                <CssBaseline />
+            </ThemeProvider>
         </div>
     );
 }
