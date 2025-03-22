@@ -1,7 +1,7 @@
 import { EditableSpan } from "./EditableSpan";
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { gridContaiter } from "./TodoList.styles";
 
 type TodoComponentHeaderPropsType = {
@@ -16,7 +16,7 @@ export const TodoComponentHeader = (props: TodoComponentHeaderPropsType) => {
             <Grid container sx={gridContaiter}>
                 <h3><EditableSpan title={props.title} onClick={props.onChange} /></h3>
                 <IconButton onClick={props.onClick} aria-label="delete">
-                    <DeleteIcon />
+                <DeleteOutlinedIcon />
                 </IconButton>
             </Grid >
         </div >

@@ -29,20 +29,23 @@ export type TodolistType = {
 export type TasksType = {
     [todolistId: string]: Array<TaskType>
 }
+type MoodType = "light" | "dark"
 
 export function App() {
     //theme
+    const [mood, setMood] = useState<MoodType>("light")
     const theme = createTheme({
         palette: {
+            mode: (mood === "light" ? "light" : "dark"),
             primary: {
                 main: '#9EC0D9',
             },
         }
     });
 
-    // const changeMoode = () => {
-
-    // }
+    const switchMoodHandler = () => {
+        setMood(mood === "light" ? "dark" : "light")
+    }
 
     // data
     const todolistId1 = v1()
@@ -171,13 +174,13 @@ export function App() {
 
     return (
         <div className="App">
-            <ThemeProvider theme={theme} defaultMode="light">
-                <Container fixed >
-                    <ButtonAppBar />
+            <ThemeProvider theme={theme}>
+                <Container fixed maxWidth={'xl'}>
+                    <ButtonAppBar onChange={switchMoodHandler} />
                     <Grid container sx={{ mb: "15px" }}>
                         <AddForm createNewItem={createNewTodoListHandler} />
                     </Grid>
-                    <Grid container sx={{ gap: "15px" }}>
+                    <Grid container sx={{ gap: "15px", justifyContent: "space-between"}}>
                         {todolistComponents}
                     </Grid>
                 </Container>
