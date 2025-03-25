@@ -96,20 +96,37 @@ export function App() {
 
     // BLL - business logic
 
-    const removeTask = (taskId: string, todolistId: string) => {
-        const curentTaskList = tasks[todolistId]
-        const newTodolistTask = curentTaskList.filter(t => t.id !== taskId)
-        tasks[todolistId] = newTodolistTask
-        setTasks({ ...tasks })
-    }
+    //todolist
+
     const removeTodoList = (todolistId: string) => {
         setTodolists(todolists.filter(t => t.id !== todolistId))
         delete tasks[todolistId]
         setTasks({ ...tasks })
     }
 
+    const createNewTodoList = (title: string) => {
+        const id = v1()
+        const newTodoList: TodolistType = { id, title, filter: "all" }
+        setTodolists([newTodoList, ...todolists])
+        setTasks({ ...tasks, [id]: [] })
+    }
+
     const changeTodoListFilter = (todolistId: string, filter: FilterValuesType) => {
         setTodolists(todolists.map(todolist => todolist.id === todolistId ? { ...todolist, filter } : todolist))
+    }
+
+    const createNewTodoListHandler = (title: string) => createNewTodoList(title)
+
+    const changeTodoListTitle = (todolistId: string, title: string) => {
+        setTodolists(todolists.map(el => el.id === todolistId ? { ...el, title } : el))
+    }
+
+    //tasks
+    const removeTask = (taskId: string, todolistId: string) => {
+        const curentTaskList = tasks[todolistId]
+        const newTodolistTask = curentTaskList.filter(t => t.id !== taskId)
+        tasks[todolistId] = newTodolistTask
+        setTasks({ ...tasks })
     }
 
     const createTask = (title: string, itemId: string) => {
@@ -123,23 +140,10 @@ export function App() {
         setTasks({ ...tasks })
     }
 
-    const createNewTodoList = (title: string) => {
-        const id = v1()
-        const newTodoList: TodolistType = { id, title, filter: "all" }
-        setTodolists([newTodoList, ...todolists])
-        setTasks({ ...tasks, [id]: [] })
-    }
-
-    const createNewTodoListHandler = (title: string) => createNewTodoList(title)
-
     const changeTaskStatus = (taskId: string, newStatus: boolean, todolistId: string) => {
         const todolistTasks = tasks[todolistId]
         tasks[todolistId] = todolistTasks.map(t => t.id === taskId ? { ...t, isDone: newStatus } : t)
         setTasks({ ...tasks })
-    }
-
-    const changeTodoListTitle = (todolistId: string, title: string) => {
-        setTodolists(todolists.map(el => el.id === todolistId ? { ...el, title } : el))
     }
 
     const changeTaskTitle = (todolistId: string, itemId: string, title: string) => {
@@ -180,7 +184,7 @@ export function App() {
                     <Grid container sx={{ mb: "15px" }}>
                         <AddForm createNewItem={createNewTodoListHandler} />
                     </Grid>
-                    <Grid container sx={{ gap: "15px", justifyContent: "space-between"}}>
+                    <Grid container sx={{ gap: "15px", justifyContent: "space-between" }}>
                         {todolistComponents}
                     </Grid>
                 </Container>
