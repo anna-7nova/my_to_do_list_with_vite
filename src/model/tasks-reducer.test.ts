@@ -1,7 +1,8 @@
 import { beforeEach, expect, test } from "vitest";
 import { TasksType } from "../App";
 import { v1 } from "uuid";
-import { changeStatusTaskAC, createTaskAC, removeTaskAC, tasksReducer, updateTitleTaskAC } from "./tasks-reducer";
+import { changeStatusTaskAC, createEmptyTodoListAC, createTaskAC, removeTaskAC, tasksReducer, updateTitleTaskAC } from "./tasks-reducer";
+import { removeTodolistAC } from "./todolists-reducer";
 
 let todolistId1: string
 let todolistId2: string
@@ -76,3 +77,27 @@ const endState = tasksReducer(startState, updateTitleTaskAC( todolistId1, startS
 expect(endState[todolistId1].length).toBe(3)
 expect(endState[todolistId1][0].title).toBe("aaa")
 })
+
+test('array should be created for new todolist', () => {
+    const endState = tasksReducer(startState, createEmptyTodoListAC( v1()))
+   
+    const keys = Object.keys(endState)
+    const newKey = keys.find(k => k !== todolistId1 && k !== todolistId2)
+    if (!newKey) {
+      throw Error('New key should be added')
+    }
+   
+    expect(keys.length).toBe(3)
+    expect(endState[newKey]).toEqual([])
+  })
+
+  test('property with todolistId should be deleted', () => {
+    const endState = tasksReducer(startState, removeTodolistAC(todolistId2))
+   
+    const keys = Object.keys(endState)
+   
+    expect(keys.length).toBe(1)
+    expect(endState[todolistId2]).not.toBeDefined()
+    // or
+    expect(endState[todolistId2]).toBeUndefined()
+  })

@@ -31,10 +31,10 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should have the new result', () => {
   // 2. Действие
-  const endState = todolistsReducer(startState, createNewTodolistAC("new title"));
+  const endState = todolistsReducer(startState, createNewTodolistAC("new title", v1()));
 
   expect(endState.length).toBe(3);
-  expect(endState[2].title).toBe("new title");
+  expect(endState[0].title).toBe("new title");
 });
 
 test('correct todolist should change filter to complete', () => {

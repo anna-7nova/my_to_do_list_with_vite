@@ -1,17 +1,21 @@
 import { v1 } from "uuid";
 import { TasksType, TaskType } from "../App";
+import { RemoveTodolistActionType } from "./todolists-reducer";
 
 //types
 type RemoveTaskType = ReturnType<typeof removeTaskAC>;
 type CreateTaskType = ReturnType<typeof createTaskAC>;
 type ChangeStatusTaskType = ReturnType<typeof changeStatusTaskAC>;
 type UpdateTitleTaskType = ReturnType<typeof updateTitleTaskAC>;
+type CreateTodolistTaskType = ReturnType<typeof createEmptyTodoListAC>;
 
 type ActionType =
   | RemoveTaskType
   | CreateTaskType
   | ChangeStatusTaskType
-  | UpdateTitleTaskType;
+  | UpdateTitleTaskType
+  | CreateTodolistTaskType
+  | RemoveTodolistActionType;
 
   //data
   const todolistId1 = v1()
@@ -80,6 +84,13 @@ export const tasksReducer = (
     case "UPDATE-TITLE-TASKS": {
       return {...state, [action.payload.todolistId] : state[action.payload.todolistId].map(el => el.id === action.payload.itemId ? { ...el, title: action.payload.title } : el) };
     }
+    case 'REMOVE-TODOLIST': {
+      delete state[action.payload.id]
+      return {...state}
+    }
+    case "ADD-TODOLIST": {
+      return {...state, [action.payload.todolistId]: []}
+    }
     default:
       return state;
   }
@@ -92,23 +103,24 @@ export const removeTaskAC = (taskId: string, todolistId: string) => {
 export const createTaskAC = (title: string, itemId: string) => {
   return { type: "CREATE-TASKS", payload: { title, itemId } } as const;
 };
-export const changeStatusTaskAC = (
-  taskId: string,
-  newStatus: boolean,
-  todolistId: string
-) => {
+export const changeStatusTaskAC = (taskId: string, newStatus: boolean, todolistId: string) => {
   return {
     type: "CHANGE-STATUS-TASKS",
     payload: { taskId, newStatus, todolistId },
   } as const;
 };
-export const updateTitleTaskAC = (
-  todolistId: string,
-  itemId: string,
-  title: string
-) => {
+export const updateTitleTaskAC = (todolistId: string, itemId: string, title: string) => {
   return {
     type: "UPDATE-TITLE-TASKS",
     payload: { todolistId, itemId, title },
   } as const;
 };
+
+export const createEmptyTodoListAC = (todolistId: string) => {
+  return {
+    type: "ADD-TODOLIST",
+    payload: { todolistId},
+  } as const;
+};
+
+
