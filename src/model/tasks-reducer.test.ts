@@ -1,8 +1,8 @@
 import { beforeEach, expect, test } from "vitest";
 import { TasksType } from "../App";
 import { v1 } from "uuid";
-import { changeStatusTaskAC, createEmptyTodoListAC, createTaskAC, removeTaskAC, tasksReducer, updateTitleTaskAC } from "./tasks-reducer";
-import { removeTodolistAC } from "./todolists-reducer";
+import { changeStatusTaskAC, createTaskAC, removeTaskAC, tasksReducer, updateTitleTaskAC } from "./tasks-reducer";
+import { createNewTodolistAC, removeTodolistAC } from "./todolists-reducer";
 
 let todolistId1: string
 let todolistId2: string
@@ -79,7 +79,7 @@ expect(endState[todolistId1][0].title).toBe("aaa")
 })
 
 test('array should be created for new todolist', () => {
-    const endState = tasksReducer(startState, createEmptyTodoListAC( v1()))
+    const endState = tasksReducer(startState, createNewTodolistAC("new todolist"))
    
     const keys = Object.keys(endState)
     const newKey = keys.find(k => k !== todolistId1 && k !== todolistId2)

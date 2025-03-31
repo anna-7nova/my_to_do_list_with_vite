@@ -1,20 +1,19 @@
 import { v1 } from "uuid";
 import { TasksType, TaskType } from "../App";
-import { RemoveTodolistActionType } from "./todolists-reducer";
+import { CreateNewToodolistActionType, RemoveTodolistActionType } from "./todolists-reducer";
 
 //types
 type RemoveTaskType = ReturnType<typeof removeTaskAC>;
 type CreateTaskType = ReturnType<typeof createTaskAC>;
 type ChangeStatusTaskType = ReturnType<typeof changeStatusTaskAC>;
 type UpdateTitleTaskType = ReturnType<typeof updateTitleTaskAC>;
-type CreateTodolistTaskType = ReturnType<typeof createEmptyTodoListAC>;
 
 type ActionType =
   | RemoveTaskType
   | CreateTaskType
   | ChangeStatusTaskType
   | UpdateTitleTaskType
-  | CreateTodolistTaskType
+  | CreateNewToodolistActionType
   | RemoveTodolistActionType;
 
   //data
@@ -113,13 +112,6 @@ export const updateTitleTaskAC = (todolistId: string, itemId: string, title: str
   return {
     type: "UPDATE-TITLE-TASKS",
     payload: { todolistId, itemId, title },
-  } as const;
-};
-
-export const createEmptyTodoListAC = (todolistId: string) => {
-  return {
-    type: "ADD-TODOLIST",
-    payload: { todolistId},
   } as const;
 };
 

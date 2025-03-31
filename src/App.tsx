@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { createNewTodolistAC, filteredTodolistAC, removeTodolistAC, todolistsReducer, updateTitleTodolistAC } from './model/todolists-reducer';
-import { changeStatusTaskAC, createEmptyTodoListAC, createTaskAC, removeTaskAC, tasksReducer, updateTitleTaskAC } from './model/tasks-reducer';
+import { changeStatusTaskAC, createTaskAC, removeTaskAC, tasksReducer, updateTitleTaskAC } from './model/tasks-reducer';
 
 //CRUD
 // - repeat, duplicate
@@ -97,17 +97,16 @@ export function App() {
     })
 
     // BLL - business logic
-
     //todolist
 
     const removeTodoList = (todolistId: string) => {
         dispatchTodolists(removeTodolistAC(todolistId))
+        dispatchTasks(removeTodolistAC(todolistId))
     }
 
     const createNewTodoList = (title: string) => {
-        const todolistId = v1()
-        dispatchTodolists(createNewTodolistAC(title, todolistId))
-        dispatchTasks(createEmptyTodoListAC(todolistId))
+        dispatchTodolists(createNewTodolistAC(title))
+        dispatchTasks(createNewTodolistAC(title))
     }
 
     const createNewTodoListHandler = (title: string) => createNewTodoList(title)
@@ -138,7 +137,7 @@ export function App() {
     }
 
     //UI
-    const todolistComponents = todolists.map(t => {
+    const todolistComponents = todolists?.map(t => {
         const todolistTasks = tasks[t.id]
         let filteredTask = todolistTasks
         if (t.filter === "active") {
