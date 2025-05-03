@@ -15,17 +15,17 @@ RemoveTodolistActionType
 export const todolistsReducer = (state: TodolistType[] = [], action: ActionType): TodolistType[] => {
   switch (action.type) {
     case "REMOVE-TODOLIST": {
-      return state.filter(el=>el.id !== action.payload.id);
+      return state.filter(el=>el.id !== action.payload.todolistId);
     }
     case "ADD-TODOLIST": {
       const newTodoList: TodolistType = { id: action.payload.todolistId, title: action.payload.title, filter: "all" }
       return [newTodoList, ...state];
     }
     case "FILTER-TODOLIST": {
-      return state.map(el => el.id === action.payload.id ? { ...el, filter: action.payload.filter } : el);
+      return state.map(el => el.id === action.payload.todolistId ? { ...el, filter: action.payload.filter } : el);
     }
     case "UPDATE-TITLE-TODOLIST": {
-      return state.map(el => el.id === action.payload.id ? { ...el, title: action.payload.title } : el);
+      return state.map(el => el.id === action.payload.todolistId ? { ...el, title: action.payload.title } : el);
     }
     default:
       return state;
@@ -33,18 +33,18 @@ export const todolistsReducer = (state: TodolistType[] = [], action: ActionType)
 };
 
 //actions
-export const removeTodolistAC = (id: string)=> {
-  return {type: 'REMOVE-TODOLIST', payload: { id }} as const
+export const removeTodolistAC = (payload: {todolistId: string})=> {
+  return {type: 'REMOVE-TODOLIST', payload} as const
 }
 
-export const createNewTodolistAC = (title: string, todolistId:string)=> {
-  return {type: "ADD-TODOLIST", payload: {title, todolistId}} as const
+export const createNewTodolistAC = (payload: {title: string, todolistId:string})=> {
+  return {type: "ADD-TODOLIST", payload} as const
 }
 
-export const filteredTodolistAC = (id: string, filter: FilterValuesType) => {
-  return {type: "FILTER-TODOLIST", payload: {id, filter}} as const
+export const filteredTodolistAC = (payload: {todolistId: string, filter: FilterValuesType}) => {
+  return {type: "FILTER-TODOLIST", payload} as const
 }
 
-export const updateTitleTodolistAC = (id: string, title: string) => {
-  return {type: "UPDATE-TITLE-TODOLIST", payload: {id, title}} as const
+export const updateTitleTodolistAC = (payload: {todolistId: string, title: string}) => {
+  return {type: "UPDATE-TITLE-TODOLIST", payload} as const
 }

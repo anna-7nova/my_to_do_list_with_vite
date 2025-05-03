@@ -59,7 +59,7 @@ beforeEach(() => {
 test("correct list of task should be deleted 1 position", () => {
   const endState = tasksReducer(
     startState,
-    removeTaskAC(startState[todolistId2][1].id, todolistId2)
+    removeTaskAC({taskId: startState[todolistId2][1].id, todolistId: todolistId2})
   );
 
   expect(endState[todolistId2].length).toBe(2);
@@ -69,7 +69,7 @@ test("correct list of task should be deleted 1 position", () => {
 test("correct list of task should add 1 task", () => {
   const endState = tasksReducer(
     startState,
-    createTaskAC("New task", todolistId1)
+    createTaskAC({title: "New task", itemId: todolistId1})
   );
 
   expect(endState[todolistId1].length).toBe(4);
@@ -79,7 +79,7 @@ test("correct list of task should add 1 task", () => {
 test("correct list of task should change status of task", () => {
   const endState = tasksReducer(
     startState,
-    changeStatusTaskAC(startState[todolistId1][0].id, false, todolistId1)
+    changeStatusTaskAC({taskId: startState[todolistId1][0].id, newStatus: false, todolistId:todolistId1})
   );
 
   expect(endState[todolistId1].length).toBe(3);
@@ -89,7 +89,7 @@ test("correct list of task should change status of task", () => {
 test("correct list of task should update the title", () => {
   const endState = tasksReducer(
     startState,
-    updateTitleTaskAC(todolistId1, startState[todolistId1][0].id, "aaa")
+    updateTitleTaskAC({todolistId: todolistId1, itemId: startState[todolistId1][0].id, title: "aaa"})
   );
 
   expect(endState[todolistId1].length).toBe(3);
@@ -99,7 +99,7 @@ test("correct list of task should update the title", () => {
 test("array should be created for new todolist", () => {
   const endState = tasksReducer(
     startState,
-    createNewTodolistAC("new todolist", v1())
+    createNewTodolistAC({title: "new todolist", todolistId: v1()})
   );
 
   const keys = Object.keys(endState);
@@ -113,7 +113,7 @@ test("array should be created for new todolist", () => {
 });
 
 test("property with todolistId should be deleted", () => {
-  const endState = tasksReducer(startState, removeTodolistAC(todolistId2));
+  const endState = tasksReducer(startState, removeTodolistAC({todolistId: todolistId2}));
 
   const keys = Object.keys(endState);
 

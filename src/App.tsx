@@ -98,41 +98,43 @@ export function App() {
     //todolist
 
     const removeTodoList = (todolistId: string) => {
-        dispatchTodolists(removeTodolistAC(todolistId))
-        dispatchTasks(removeTodolistAC(todolistId))
+        const action = removeTodolistAC({todolistId})
+        dispatchTodolists(action)
+        dispatchTasks(action)
     }
 
     const createNewTodoList = (title: string) => {
         const todolistId = v1()
-        dispatchTodolists(createNewTodolistAC(title, todolistId))
-        dispatchTasks(createNewTodolistAC(title, todolistId))
+        const action = createNewTodolistAC({title, todolistId})
+        dispatchTodolists(action)
+        dispatchTasks(action)
     }
 
     const createNewTodoListHandler = (title: string) => createNewTodoList(title)
 
     const changeTodoListFilter = (todolistId: string, filter: FilterValuesType) => {
-        dispatchTodolists(filteredTodolistAC(todolistId, filter))
+        dispatchTodolists(filteredTodolistAC({todolistId, filter}))
     }
 
     const changeTodoListTitle = (todolistId: string, title: string) => {
-        dispatchTodolists(updateTitleTodolistAC(todolistId, title))
+        dispatchTodolists(updateTitleTodolistAC({todolistId, title}))
     }
 
     //tasks
     const removeTask = (taskId: string, todolistId: string) => {
-        dispatchTasks(removeTaskAC(taskId, todolistId))
+        dispatchTasks(removeTaskAC({taskId, todolistId}))
     }
 
     const createTask = (title: string, itemId: string) => {
-        dispatchTasks(createTaskAC(title, itemId))
+        dispatchTasks(createTaskAC({title, itemId}))
     }
 
     const changeTaskStatus = (taskId: string, newStatus: boolean, todolistId: string) => {
-        dispatchTasks(changeStatusTaskAC(taskId, newStatus, todolistId))
+        dispatchTasks(changeStatusTaskAC({taskId, newStatus, todolistId}))
     }
 
     const changeTaskTitle = (todolistId: string, itemId: string, title: string) => {
-        dispatchTasks(updateTitleTaskAC(todolistId, itemId, title))
+        dispatchTasks(updateTitleTaskAC({todolistId, itemId, title}))
     }
 
     //UI
