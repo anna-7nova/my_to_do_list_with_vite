@@ -12,8 +12,6 @@ import { createNewTodolistAC, filteredTodolistAC, removeTodolistAC, todolistsRed
 import { changeStatusTaskAC, createTaskAC, removeTaskAC, tasksReducer, updateTitleTaskAC } from './model/tasks-reducer';
 
 //CRUD
-// - repeat, duplicate
-// - create clear structure
 export type TaskType = {
     id: string
     title: string
@@ -26,7 +24,7 @@ export type TodolistType = {
     id: string
     title: string
     filter: FilterValuesType
-} 
+}
 
 export type TasksType = {
     [todolistId: string]: Array<TaskType>
@@ -59,7 +57,7 @@ export function App() {
     ]
     )
 
-    const [tasks, dispatchTasks] = useReducer(tasksReducer,{
+    const [tasks, dispatchTasks] = useReducer(tasksReducer, {
         [todolistId1]: [
             {
                 id: v1(),
@@ -105,8 +103,9 @@ export function App() {
     }
 
     const createNewTodoList = (title: string) => {
-        dispatchTodolists(createNewTodolistAC(title))
-        dispatchTasks(createNewTodolistAC(title))
+        const todolistId = v1()
+        dispatchTodolists(createNewTodolistAC(title, todolistId))
+        dispatchTasks(createNewTodolistAC(title, todolistId))
     }
 
     const createNewTodoListHandler = (title: string) => createNewTodoList(title)
@@ -138,7 +137,7 @@ export function App() {
 
     //UI
     const todolistComponents = todolists?.map(t => {
-        const todolistTasks = tasks[t.id]
+        const todolistTasks = tasks[t.id] 
         let filteredTask = todolistTasks
         if (t.filter === "active") {
             filteredTask = todolistTasks.filter(item => !item.isDone)

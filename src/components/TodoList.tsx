@@ -28,7 +28,7 @@ type TodoListPropsType = {
 
 export const TodoList = (props: TodoListPropsType) => {
     //условный рендеринг
-    const taskList = props.tasks.length === 0
+    const taskList = props.tasks.length===0
         ? <span>List is empty</span>
         : <List>
             {

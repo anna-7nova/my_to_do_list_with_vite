@@ -17,7 +17,6 @@ export const AddForm = (props: AddFormType) => {
     }
 
     const [title, setTitle] = useState<string>("")
-    console.log(title)
     const [errorState, setErrorState] = useState<string | null>(null)
 
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {

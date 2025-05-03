@@ -16,47 +16,6 @@ type ActionType =
   | CreateNewToodolistActionType
   | RemoveTodolistActionType;
 
-  //data
-  const todolistId1 = v1()
-  const todolistId2 = v1()
-
-  const state: TasksType = {
-    [todolistId1]: [
-        {
-            id: v1(),
-            title: "HTML&CSS",
-            isDone: true
-        },
-        {
-            id: v1(),
-            title: "JS",
-            isDone: true
-        },
-        {
-            id: v1(),
-            title: "React",
-            isDone: false
-        },
-    ],
-    [todolistId2]: [
-        {
-            id: v1(),
-            title: "English",
-            isDone: true
-        },
-        {
-            id: v1(),
-            title: "CV",
-            isDone: true
-        },
-        {
-            id: v1(),
-            title: "Cover letter",
-            isDone: false
-        },
-    ],
-}
-
 //reducer
 export const tasksReducer = (
   state: TasksType,
@@ -72,7 +31,7 @@ export const tasksReducer = (
               title: action.payload.title,
               isDone: false
           }
-      return {...state, [action.payload.itemId]: [...state[action.payload.itemId], newTask]};
+      return {...state, [action.payload.itemId]: [newTask,...state[action.payload.itemId]]};
     }
     case "CHANGE-STATUS-TASKS": {
       return {...state, 

@@ -35,7 +35,7 @@ export default function ButtonAppBar({onChange}: ChangeMoodeType) {
                     </Typography>
                     <Box sx={{display: "flex", gap: "10px"}}>
                     <FormControlLabel control={<Switch onChange={onChange} />} label="Theme" onChange={()=>{}}/>
-                    <NavButton backgroundColor={theme.palette.primary.light} color="inherit" variant="outlined">Login</NavButton>
+                    <NavButton backgroundcolor={theme.palette.primary.light} color="inherit" variant="outlined">Login</NavButton>
                     <NavButton color="inherit" variant="outlined">LogOut</NavButton>
                     <NavButton color="inherit" variant="outlined">FAQ</NavButton>
                     </Box>
