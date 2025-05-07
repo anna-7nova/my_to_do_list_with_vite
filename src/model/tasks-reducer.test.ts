@@ -1,6 +1,5 @@
 import { beforeEach, expect, test } from "vitest";
 import { TasksType } from "../App";
-import { v1 } from "uuid";
 import {
   changeStatusTaskAC,
   createTaskAC,
@@ -9,46 +8,47 @@ import {
   updateTitleTaskAC,
 } from "./tasks-reducer";
 import { createNewTodolistAC, removeTodolistAC } from "./todolists-reducer";
+import { nanoid } from "@reduxjs/toolkit";
 
 let todolistId1: string;
 let todolistId2: string;
 let startState: TasksType = {};
 
 beforeEach(() => {
-  todolistId1 = v1();
-  todolistId2 = v1();
+  todolistId1 = nanoid();
+  todolistId2 = nanoid();
 
   startState = {
     [todolistId1]: [
       {
-        id: v1(),
+        id: nanoid(),
         title: "HTML&CSS",
         isDone: true,
       },
       {
-        id: v1(),
+        id: nanoid(),
         title: "JS",
         isDone: true,
       },
       {
-        id: v1(),
+        id: nanoid(),
         title: "React",
         isDone: false,
       },
     ],
     [todolistId2]: [
       {
-        id: v1(),
+        id: nanoid(),
         title: "English",
         isDone: true,
       },
       {
-        id: v1(),
+        id: nanoid(),
         title: "CV",
         isDone: true,
       },
       {
-        id: v1(),
+        id: nanoid(),
         title: "Cover letter",
         isDone: false,
       },
@@ -99,7 +99,7 @@ test("correct list of task should update the title", () => {
 test("array should be created for new todolist", () => {
   const endState = tasksReducer(
     startState,
-    createNewTodolistAC({title: "new todolist", todolistId: v1()})
+    createNewTodolistAC({title: "new todolist", todolistId: nanoid()})
   );
 
   const keys = Object.keys(endState);
