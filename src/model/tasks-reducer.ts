@@ -1,4 +1,4 @@
-import { TasksType } from "../App";
+import { TasksType } from "../app/App";
 import {
   createNewTodolistAC,
   removeTodolistAC,

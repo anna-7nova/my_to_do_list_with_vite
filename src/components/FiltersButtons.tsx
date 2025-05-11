@@ -1,15 +1,19 @@
 import Button from '@mui/material/Button';
-import { FilterValuesType } from '../App';
+import { FilterValuesType, type TodolistType } from '../app/App';
+import { useAppDispatch } from '../common/hooks/useAppDispatch';
+import { updateFilterTodolistAC } from '../model/todolists-reducer';
+import type React from 'react';
 
-type FilterButton = {
-    changeTodoListFilter: (todolistId: string, filter: FilterValuesType) => void
-    filter: FilterValuesType
-    todolistsId: string
+type Props = {
+    todolist: TodolistType
 }
 
-export const FiltersButtons = ({ changeTodoListFilter, filter, todolistsId }: FilterButton) => {
+export const FiltersButtons: React.FC<Props> = ({ todolist }: Props) => {
+    const { id, filter } = todolist
+    const dispatch = useAppDispatch()
+
     const changeTodoListFilterHandler = (filter: FilterValuesType) => {
-        changeTodoListFilter(todolistsId, filter)
+        dispatch(updateFilterTodolistAC({ todolistId: id, filter }))
     }
     return (
         <div>

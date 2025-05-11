@@ -1,6 +1,6 @@
 import {test, expect, beforeEach} from 'vitest'
-import { createNewTodolistAC, filteredTodolistAC, removeTodolistAC, todolistsReducer, updateTitleTodolistAC } from './todolists-reducer';
-import { TodolistType } from '../App';
+import { createNewTodolistAC, removeTodolistAC, todolistsReducer, updateFilterTodolistAC, updateTitleTodolistAC } from './todolists-reducer';
+import { TodolistType } from '../app/App';
 import { nanoid } from '@reduxjs/toolkit';
 
 let todolistId1: string
@@ -25,13 +25,13 @@ test('correct todolist should be removed', () => {
 });
 
 test('correct todolist should have the new result', () => {
-  const endState = todolistsReducer(startState, createNewTodolistAC({title: "new title", todolistId: nanoid()}));
+  const endState = todolistsReducer(startState, createNewTodolistAC({title: "new title"}));
   expect(endState.length).toBe(3);
   expect(endState[0].title).toBe("new title");
 });
 
 test('correct todolist should change filter to complete', () => {
-  const endState = todolistsReducer(startState, filteredTodolistAC({todolistId: todolistId1, filter: "completed"}));
+  const endState = todolistsReducer(startState, updateFilterTodolistAC({todolistId: todolistId1, filter: "completed"}));
   expect(endState.length).toBe(2);
   expect(endState[0].filter).toBe("completed");
   expect(endState[1].filter).toBe("all");

@@ -10,13 +10,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { NavButton } from './NavButton';
 import { useTheme } from '@mui/material';
+import { useAppDispatch } from '../common/hooks/useAppDispatch';
+import { switchMoodAC} from '../app/app-reducer';
+import { useAppSelector } from '../common/hooks/useAppSelector';
+import { selectTheme } from '../app/app-selectors';
 
-type ChangeMoodeType = {
-    onChange: ()=> void
-}
 
-export default function ButtonAppBar({onChange}: ChangeMoodeType) {
+export default function Header() {
     const theme = useTheme();
+    const themeMood = useAppSelector(selectTheme)
+    const dispatch = useAppDispatch()
+    //switch
+    const switchMoodHandler = () => {
+        dispatch(switchMoodAC({mood: themeMood === "light" ? "dark" : "light"}))
+    }
     return (
         <Box sx={{ flexGrow: 1, paddingBottom: "80px" }}>
             <AppBar position="fixed">
@@ -34,7 +41,7 @@ export default function ButtonAppBar({onChange}: ChangeMoodeType) {
                         <img src={theme.palette.mode === "light" ? logo1 : logo2} />
                     </Typography>
                     <Box sx={{display: "flex", gap: "10px"}}>
-                    <FormControlLabel control={<Switch onChange={onChange} />} label="Theme" onChange={()=>{}}/>
+                    <FormControlLabel control={<Switch onChange={switchMoodHandler} />} label="Theme" onChange={()=>{}}/>
                     <NavButton backgroundcolor={theme.palette.primary.light} color="inherit" variant="outlined">Login</NavButton>
                     <NavButton color="inherit" variant="outlined">LogOut</NavButton>
                     <NavButton color="inherit" variant="outlined">FAQ</NavButton>

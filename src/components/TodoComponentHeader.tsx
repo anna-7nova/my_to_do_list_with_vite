@@ -4,13 +4,13 @@ import IconButton from '@mui/material/IconButton';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { gridContaiter } from "./TodoList.styles";
 
-type TodoComponentHeaderPropsType = {
+type Props = {
     title: string
     onClick: () => void
     onChange: (title: string) => void
 }
 
-export const TodoComponentHeader = (props: TodoComponentHeaderPropsType) => {
+export const TodoComponentHeader:React.FC<Props> = (props: Props) => {
     return (
         <div className={"container"}>
             <Grid container sx={gridContaiter}>

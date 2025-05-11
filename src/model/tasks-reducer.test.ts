@@ -1,5 +1,5 @@
 import { beforeEach, expect, test } from "vitest";
-import { TasksType } from "../App";
+import { TasksType } from "../app/App";
 import {
   changeStatusTaskAC,
   createTaskAC,
@@ -99,7 +99,7 @@ test("correct list of task should update the title", () => {
 test("array should be created for new todolist", () => {
   const endState = tasksReducer(
     startState,
-    createNewTodolistAC({title: "new todolist", todolistId: nanoid()})
+    createNewTodolistAC("new todolist")
   );
 
   const keys = Object.keys(endState);

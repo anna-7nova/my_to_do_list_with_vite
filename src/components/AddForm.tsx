@@ -13,7 +13,6 @@ export const AddForm = (props: AddFormType) => {
         minHeight: "40px",
         minWidth: "40px",
         width: "40px"
-
     }
 
     const [title, setTitle] = useState<string>("")
