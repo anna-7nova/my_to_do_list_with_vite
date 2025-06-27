@@ -1,15 +1,15 @@
-import { TodolistType } from '../app/App';
-import { TodoComponentHeader } from './TodoComponentHeader'
-import { AddForm } from './AddForm';
-import { FiltersButtons } from './FiltersButtons';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import { cardStyle} from './TodoList.styles';
-import { useAppDispatch } from '../common/hooks/useAppDispatch';
-import { removeTodolistAC, updateTitleTodolistAC } from '../model/todolists-reducer';
-import { TasksList } from '../TasksList';
-import { createTaskAC } from '../model/tasks-reducer';
+import { useAppDispatch } from '@/common/hooks/useAppDispatch';
+import { TodolistType, removeTodolistAC, updateTitleTodolistAC } from '@/features/model/todolists-reducer';
+import { createTaskAC } from '@/features/model/tasks-reducer';
+import { AddForm } from '@/common/components/AddForm';
+import { FiltersButtons } from './FiltersButtons/FiltersButtons';
+import { TasksList } from './TasksList/TasksList';
+import { TodoComponentHeader } from './TodoComponentHeader/TodoComponentHeader'
+import { cardStyle } from './TodoList.styles';
+
 
 type Props = {
     todolist: TodolistType

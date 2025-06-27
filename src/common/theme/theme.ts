@@ -1,5 +1,5 @@
+import { MoodType } from "@/app/app-reducer";
 import { createTheme } from "@mui/material";
-import type { MoodType } from "../../app/app-reducer";
 
 export const getTheme = (themeMood: MoodType) =>
   createTheme({

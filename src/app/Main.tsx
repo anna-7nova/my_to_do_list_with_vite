@@ -1,9 +1,9 @@
 import { Container, Grid } from '@mui/material';
 import React from 'react';
-import { AddForm } from './AddForm';
-import { TodoLists } from '../TodoLists';
+import { AddForm } from '../common/components/AddForm';
+import { TodoLists } from '../features/ui/todolists/TodoLists/TodoLists';
 import { useAppDispatch } from '../common/hooks/useAppDispatch';
-import { createNewTodolistAC } from '../model/todolists-reducer';
+import { createNewTodolistAC } from '../features/model/todolists-reducer';
 
 export const Main: React.FC = () => {
     const dispatch = useAppDispatch()

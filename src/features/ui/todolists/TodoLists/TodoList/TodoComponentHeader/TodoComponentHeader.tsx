@@ -1,8 +1,9 @@
-import { EditableSpan } from "./EditableSpan";
+import { EditableSpan } from "@/common/components/EditableSpan";
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import { gridContaiter } from "./TodoList.styles";
+import { gridContaiter } from "./TodoComponentHeader.styles";
+
 
 type Props = {
     title: string

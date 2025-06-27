@@ -1,13 +1,13 @@
 import { beforeEach, expect, test } from "vitest";
-import { TasksType } from "../app/App";
 import {
+  TasksType,
   changeStatusTaskAC,
   createTaskAC,
   removeTaskAC,
   tasksReducer,
   updateTitleTaskAC,
-} from "./tasks-reducer";
-import { createNewTodolistAC, removeTodolistAC } from "./todolists-reducer";
+} from "../tasks-reducer";
+import { createNewTodolistAC, removeTodolistAC } from "../todolists-reducer";
 import { nanoid } from "@reduxjs/toolkit";
 
 let todolistId1: string;

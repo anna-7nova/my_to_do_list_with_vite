@@ -1,8 +1,7 @@
 import Button from '@mui/material/Button';
-import { FilterValuesType, type TodolistType } from '../app/App';
-import { useAppDispatch } from '../common/hooks/useAppDispatch';
-import { updateFilterTodolistAC } from '../model/todolists-reducer';
+import { useAppDispatch } from '@/common/hooks/useAppDispatch';
 import type React from 'react';
+import { FilterValuesType, TodolistType, updateFilterTodolistAC } from '@/features/model/todolists-reducer';
 
 type Props = {
     todolist: TodolistType

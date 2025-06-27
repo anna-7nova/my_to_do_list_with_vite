@@ -4,16 +4,17 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import logo1 from "../icons/LOGO_REMBOX_black.png"
-import logo2 from "../icons/LOGO_REMBOX_white.png"
+import logo1 from "@/common/icons/LOGO_REMBOX_black.png"
+import logo2 from "@/common//icons/LOGO_REMBOX_white.png"
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { NavButton } from './NavButton';
 import { useTheme } from '@mui/material';
-import { useAppDispatch } from '../common/hooks/useAppDispatch';
-import { switchMoodAC} from '../app/app-reducer';
-import { useAppSelector } from '../common/hooks/useAppSelector';
-import { selectTheme } from '../app/app-selectors';
+import { useAppSelector } from '../hooks/useAppSelector';
+import { selectTheme } from '@/app/app-selectors';
+import { useAppDispatch } from '../hooks/useAppDispatch';
+import { switchMoodAC } from '@/app/app-reducer';
+
 
 
 export default function Header() {

@@ -1,6 +1,5 @@
 import {test, expect, beforeEach} from 'vitest'
-import { createNewTodolistAC, removeTodolistAC, todolistsReducer, updateFilterTodolistAC, updateTitleTodolistAC } from './todolists-reducer';
-import { TodolistType } from '../app/App';
+import { TodolistType, createNewTodolistAC, removeTodolistAC, todolistsReducer, updateFilterTodolistAC, updateTitleTodolistAC } from '../todolists-reducer';
 import { nanoid } from '@reduxjs/toolkit';
 
 let todolistId1: string

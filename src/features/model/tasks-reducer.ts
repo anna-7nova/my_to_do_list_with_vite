@@ -1,9 +1,18 @@
-import { TasksType } from "../app/App";
 import {
   createNewTodolistAC,
   removeTodolistAC,
 } from "./todolists-reducer";
 import { createAction, createReducer, nanoid } from "@reduxjs/toolkit";
+
+export type TaskType = {
+  id: string
+  title: string
+  isDone: boolean
+}
+
+export type TasksType = {
+  [todolistId: string]: Array<TaskType>
+}
 
 //actions
 export const removeTaskAC = createAction<{

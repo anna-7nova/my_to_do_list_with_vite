@@ -1,16 +1,16 @@
 import React, { ChangeEvent } from 'react';
-import { EditableSpan } from './components/EditableSpan';
+import { EditableSpan } from '@/common/components/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { listItemStylesSx } from './components/TodoList.styles';
-import { changeStatusTaskAC, removeTaskAC, updateTitleTaskAC } from './model/tasks-reducer';
-import type { TodolistType } from './app/App';
-import { useAppDispatch } from './common/hooks/useAppDispatch';
-import { useAppSelector } from './common/hooks/useAppSelector';
-import { selectTasks } from './model/tasks-selectors';
+import { useAppDispatch } from '@/common/hooks/useAppDispatch';
+import { useAppSelector } from '@/common/hooks/useAppSelector';
+import { changeStatusTaskAC, removeTaskAC, updateTitleTaskAC } from '@/features/model/tasks-reducer';
+import { TodolistType } from '@/features/model/todolists-reducer';
+import { selectTasks } from '@/features/model/tasks-selectors';
+import { taskListStylesSx } from './TasksList.styles';
 
 type Props = {
     todolist: TodolistType
@@ -44,7 +44,7 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
                                 const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => dispatch(changeStatusTaskAC({ taskId: t.id, newStatus: e.currentTarget.checked, todolistId: id }))
                                 return (
                                     <ListItem key={t.id}
-                                        sx={listItemStylesSx(t.isDone)}>
+                                        sx={taskListStylesSx(t.isDone)}>
                                         <div>
                                             <Checkbox checked={t.isDone} onChange={changeTaskStatusHandler} />
                                             <EditableSpan title={t.title} onClick={(value: string) => changeTaskTitle(t.id, value)} />
