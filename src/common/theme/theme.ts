@@ -1,12 +1,12 @@
-import { MoodType } from "@/app/app-reducer";
-import { createTheme } from "@mui/material";
+import { MoodType } from '@/app/app-reducer'
+import { createTheme } from '@mui/material'
 
 export const getTheme = (themeMood: MoodType) =>
   createTheme({
     palette: {
       mode: themeMood,
       primary: {
-        main: "#9EC0D9",
+        main: '#9EC0D9',
       },
     },
-  });
+  })
