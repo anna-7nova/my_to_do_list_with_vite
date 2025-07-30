@@ -6,8 +6,8 @@ import {
   removeTaskAC,
   tasksReducer,
   updateTitleTaskAC,
-} from '../tasks-reducer'
-import { createNewTodolistAC, removeTodolistAC } from '../todolists-reducer'
+} from '../tasks-slice'
+import { createNewTodolistAC, removeTodolistAC } from '../todolists-slice'
 import { nanoid } from '@reduxjs/toolkit'
 
 let todolistId1: string

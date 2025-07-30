@@ -5,13 +5,13 @@ import { FiltersButtons } from './FiltersButtons/FiltersButtons'
 import { TasksList } from './TasksList/TasksList'
 import { TodoComponentHeader } from './TodoComponentHeader/TodoComponentHeader'
 import { cardStyle } from './TodoList.styles'
-import { TodolistType, removeTodolistAC, updateTitleTodolistAC } from '@/features/todolists/model/todolists-reducer'
-import { createTaskAC } from '@/features/todolists/model/tasks-reducer'
+import {  DomainTodolist, removeTodolistAC, updateTitleTodolistAC } from '@/features/todolists/model/todolists-slice'
+import { createTaskAC } from '@/features/todolists/model/tasks-slice'
 import { AddForm } from '@/common/components'
 import { useAppDispatch } from '@/common/hooks'
 
 type Props = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const TodoList: React.FC<Props> = ({ todolist }: Props) => {

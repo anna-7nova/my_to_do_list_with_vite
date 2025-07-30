@@ -5,14 +5,13 @@ import Checkbox from '@mui/material/Checkbox'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import { taskListStylesSx } from './TasksList.styles'
-import { TodolistType } from '@/features/todolists/model/todolists-reducer'
-import { selectTasks } from '@/features/todolists/model/tasks-selectors'
-import { changeStatusTaskAC, removeTaskAC, updateTitleTaskAC } from '@/features/todolists/model/tasks-reducer'
+import { DomainTodolist} from '@/features/todolists/model/todolists-slice'
+import { changeStatusTaskAC, removeTaskAC, selectTasks, updateTitleTaskAC } from '@/features/todolists/model/tasks-slice'
 import { EditableSpan } from '@/common/components'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 
 type Props = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
@@ -34,11 +33,11 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
     dispatch(updateTitleTaskAC({ todolistId: id, itemId: taskId, title: value }))
   return (
     <>
-      {tasks[id].length === 0 ? (
+      {filteredTask?.length === 0 ? (
         <span>List is empty</span>
       ) : (
         <List>
-          {filteredTask.map((t) => {
+          {filteredTask?.map((t) => {
             const removeTaskHandler = () => dispatch(removeTaskAC({ taskId: t.id, todolistId: id }))
             const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) =>
               dispatch(changeStatusTaskAC({ taskId: t.id, newStatus: e.currentTarget.checked, todolistId: id }))

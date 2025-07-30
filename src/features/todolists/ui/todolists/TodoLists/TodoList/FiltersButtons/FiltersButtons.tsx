@@ -1,10 +1,10 @@
 import Button from '@mui/material/Button'
 import type React from 'react'
-import { FilterValuesType, TodolistType, updateFilterTodolistAC } from '@/features/todolists/model/todolists-reducer'
+import { DomainTodolist, FilterValuesType, updateFilterTodolistAC } from '@/features/todolists/model/todolists-slice'
 import { useAppDispatch } from '@/common/hooks'
 
 type Props = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const FiltersButtons: React.FC<Props> = ({ todolist }: Props) => {

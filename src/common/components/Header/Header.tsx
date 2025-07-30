@@ -10,9 +10,8 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import { useTheme } from '@mui/material'
 import { useAppSelector } from '../../hooks/useAppSelector'
-import { selectTheme } from '@/app/app-selectors'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
-import { switchMoodAC } from '@/app/app-reducer'
+import { selectTheme, switchMoodAC } from '@/app/app-slice'
 import { NavButton } from '..'
 
 export function Header() {
