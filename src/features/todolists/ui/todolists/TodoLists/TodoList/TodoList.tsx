@@ -5,8 +5,8 @@ import { FiltersButtons } from './FiltersButtons/FiltersButtons'
 import { TasksList } from './TasksList/TasksList'
 import { TodoComponentHeader } from './TodoComponentHeader/TodoComponentHeader'
 import { cardStyle } from './TodoList.styles'
-import {  DomainTodolist, removeTodolistAC, updateTitleTodolistAC } from '@/features/todolists/model/todolists-slice'
-import { createTaskAC } from '@/features/todolists/model/tasks-slice'
+import { DomainTodolist, removeTodolistTC, updateTitleTodolistTC } from '@/features/todolists/model/todolists-slice'
+import { createTaskTC } from '@/features/todolists/model/tasks-slice'
 import { AddForm } from '@/common/components'
 import { useAppDispatch } from '@/common/hooks'
 
@@ -18,10 +18,9 @@ export const TodoList: React.FC<Props> = ({ todolist }: Props) => {
   const dispatch = useAppDispatch()
 
   //handlers
-  const removeTodoListHandler = () => dispatch(removeTodolistAC({ todolistId: todolist.id }))
-  const changeTodoListTitleHandler = (title: string) =>
-    dispatch(updateTitleTodolistAC({ todolistId: todolist.id, title }))
-  const addNewTaskHandler = (title: string) => dispatch(createTaskAC({ title, itemId: todolist.id }))
+  const removeTodoListHandler = () => dispatch(removeTodolistTC({ todoListId: todolist.id }))
+  const changeTodoListTitleHandler = (title: string) => dispatch(updateTitleTodolistTC({ id: todolist.id, title }))
+  const addNewTaskHandler = (title: string) => dispatch(createTaskTC({ title, todoListId: todolist.id }))
 
   return (
     <div className="todoList">

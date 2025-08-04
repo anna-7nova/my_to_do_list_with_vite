@@ -1,14 +1,12 @@
 import { test, expect, beforeEach } from 'vitest'
 import {
+  createNewTodolistTC,
   DomainTodolist,
-  createNewTodolistAC,
-  removeTodolistAC,
+  removeTodolistTC,
   todolistsReducer,
   updateFilterTodolistAC,
-  updateTitleTodolistAC,
 } from '../todolists-slice'
 import { nanoid } from '@reduxjs/toolkit'
-
 
 let todolistId1: string
 let todolistId2: string
@@ -20,19 +18,34 @@ beforeEach(() => {
 
   // 1. Стартовый state
   startState = [
-    { id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0  },
+    { id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0 },
     { id: todolistId2, title: 'What to improve', filter: 'all', addedDate: '', order: 0 },
   ]
 })
 
 test('correct todolist should be removed', () => {
-  const endState = todolistsReducer(startState, removeTodolistAC({ todolistId: todolistId1 }))
+  const endState = todolistsReducer(
+    startState,
+    removeTodolistTC.fulfilled({ todoListId: todolistId1 }, '', { todoListId: todolistId1 }),
+  )
   expect(endState.length).toBe(1)
   expect(endState[0].id).toBe(todolistId2)
 })
 
 test('correct todolist should have the new result', () => {
-  const endState = todolistsReducer(startState, createNewTodolistAC(title: 'new title'))
+  const newTodolist = {
+    id: nanoid(),
+    title: 'new title',
+    filter: 'all',
+    addedDate: '',
+    order: 0,
+  }
+  // createNewTodolistTC.fulfilled(
+  // newTodolist:  что возвращает thunk при успехе,
+  // '': уникальный ID запроса (можно передать пустую строку в тестах),
+  // 'new title': аргументы, с которыми был вызван thunk
+  //  )
+  const endState = todolistsReducer(startState, createNewTodolistTC.fulfilled(newTodolist, '', 'new title'))
   expect(endState.length).toBe(3)
   expect(endState[0].title).toBe('new title')
 })

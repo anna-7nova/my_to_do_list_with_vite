@@ -66,8 +66,8 @@ export const AppHttpRequests = () => {
       startDate: task.startDate,
       deadline: task.deadline,
     }
-    tasksApi.changeStatus({todoListId, taskId: task.id, model }).then((res) => {
-      setTasks({...tasks, [todoListId]: tasks[todoListId].map(el=> (el.id===task.id ? res.data.data.item: el))})
+    tasksApi.changeStatus({ todoListId, taskId: task.id, model }).then((res) => {
+      setTasks({ ...tasks, [todoListId]: tasks[todoListId].map((el) => (el.id === task.id ? res.data.data.item : el)) })
     })
   }
 
@@ -81,8 +81,8 @@ export const AppHttpRequests = () => {
       startDate: task.startDate,
       deadline: task.deadline,
     }
-    tasksApi.changeStatus({todoListId, taskId: task.id, model }).then((res) => {
-      setTasks({...tasks, [todoListId]: tasks[todoListId].map(el=> (el.id===task.id ? res.data.data.item: el))})
+    tasksApi.changeStatus({ todoListId, taskId: task.id, model }).then((res) => {
+      setTasks({ ...tasks, [todoListId]: tasks[todoListId].map((el) => (el.id === task.id ? res.data.data.item : el)) })
     })
   }
 

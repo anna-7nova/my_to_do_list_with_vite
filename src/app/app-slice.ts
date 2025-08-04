@@ -13,12 +13,12 @@ export const appSlice = createSlice({
     }
   },
   selectors: {
-    selectTheme: state => state.mood
-  }
+    selectTheme: (state) => state.mood,
+  },
 })
 
 export const appReducer = appSlice.reducer
 export const { switchMoodAC } = appSlice.actions
-export const {selectTheme}=appSlice.selectors
+export const { selectTheme } = appSlice.selectors
 
 export type MoodType = 'light' | 'dark'

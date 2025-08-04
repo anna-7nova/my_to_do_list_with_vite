@@ -4,10 +4,10 @@ export enum TaskStatus {
   Completed = 2,
   Draft = 3,
 }
-export enum TaskPriority{
-    Low=0,
-    Middle=1,
-    High=2,
-    Urgently=3,
-    Later=4
+export enum TaskPriority {
+  Low = 0,
+  Middle = 1,
+  High = 2,
+  Urgently = 3,
+  Later = 4,
 }

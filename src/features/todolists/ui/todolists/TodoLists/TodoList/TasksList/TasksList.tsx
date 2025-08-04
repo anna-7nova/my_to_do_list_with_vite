@@ -1,14 +1,21 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Checkbox from '@mui/material/Checkbox'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import { taskListStylesSx } from './TasksList.styles'
-import { DomainTodolist} from '@/features/todolists/model/todolists-slice'
-import { changeStatusTaskAC, removeTaskAC, selectTasks, updateTitleTaskAC } from '@/features/todolists/model/tasks-slice'
+import { DomainTodolist } from '@/features/todolists/model/todolists-slice'
+import {
+  changeStatusTaskTC,
+  getTasksTC,
+  removeTaskTC,
+  selectTasks,
+  updateTitleTaskTC,
+} from '@/features/todolists/model/tasks-slice'
 import { EditableSpan } from '@/common/components'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
+import { TaskStatus } from '@/common/enums'
 
 type Props = {
   todolist: DomainTodolist
@@ -20,17 +27,21 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
   const tasks = useAppSelector(selectTasks)
   const dispatch = useAppDispatch()
 
+  useEffect(() => {
+    dispatch(getTasksTC(id))
+  }, [])
+
   const todolistTasks = tasks[id]
   let filteredTask = todolistTasks
   if (filter === 'active') {
-    filteredTask = todolistTasks.filter((item) => !item.isDone)
+    filteredTask = todolistTasks.filter((item) => item.status === TaskStatus.New)
   }
   if (filter === 'completed') {
-    filteredTask = todolistTasks.filter((item) => item.isDone)
+    filteredTask = todolistTasks.filter((item) => item.status === TaskStatus.Completed)
   }
 
   const changeTaskTitle = (taskId: string, value: string) =>
-    dispatch(updateTitleTaskAC({ todolistId: id, itemId: taskId, title: value }))
+    dispatch(updateTitleTaskTC({ todoListId: id, taskId: taskId, changeItem: value }))
   return (
     <>
       {filteredTask?.length === 0 ? (
@@ -38,13 +49,15 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
       ) : (
         <List>
           {filteredTask?.map((t) => {
-            const removeTaskHandler = () => dispatch(removeTaskAC({ taskId: t.id, todolistId: id }))
-            const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) =>
-              dispatch(changeStatusTaskAC({ taskId: t.id, newStatus: e.currentTarget.checked, todolistId: id }))
+            const removeTaskHandler = () => dispatch(removeTaskTC({ taskId: t.id, todoListId: id }))
+            const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+              const newStatus = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
+              dispatch(changeStatusTaskTC({ taskId: t.id, newStatus: newStatus, todoListId: id }))
+            }
             return (
-              <ListItem key={t.id} sx={taskListStylesSx(t.isDone)}>
+              <ListItem key={t.id} sx={taskListStylesSx(t.status === TaskStatus.Completed)}>
                 <div>
-                  <Checkbox checked={t.isDone} onChange={changeTaskStatusHandler} />
+                  <Checkbox checked={t.status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
                   <EditableSpan title={t.title} onClick={(value: string) => changeTaskTitle(t.id, value)} />
                 </div>
                 <IconButton onClick={removeTaskHandler} aria-label="delete">
