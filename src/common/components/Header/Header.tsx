@@ -9,19 +9,21 @@ import logo2 from '@/common//icons/LOGO_REMBOX_white.png'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Switch from '@mui/material/Switch'
 import { useTheme } from '@mui/material'
+import LinearProgress from '@mui/material/LinearProgress';
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
-import { selectTheme, switchMoodAC } from '@/app/app-slice'
+import { selectStatus, selectTheme, switchMoodAC } from '@/app/app-slice'
 import { NavButton } from '..'
 
 export function Header() {
   const theme = useTheme()
   const themeMood = useAppSelector(selectTheme)
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch() 
   //switch
   const switchMoodHandler = () => {
     dispatch(switchMoodAC({ mood: themeMood === 'light' ? 'dark' : 'light' }))
   }
+  const status = useAppSelector(selectStatus)
   return (
     <Box sx={{ flexGrow: 1, paddingBottom: '80px' }}>
       <AppBar position="fixed">
@@ -33,7 +35,7 @@ export function Header() {
             <img src={theme.palette.mode === 'light' ? logo1 : logo2} />
           </Typography>
           <Box sx={{ display: 'flex', gap: '10px' }}>
-            <FormControlLabel control={<Switch onChange={switchMoodHandler} />} label="Theme" onChange={() => {}} />
+            <FormControlLabel control={<Switch onChange={switchMoodHandler} />} label="Theme" onChange={() => { }} />
             <NavButton backgroundcolor={theme.palette.primary.light} color="inherit" variant="outlined">
               Login
             </NavButton>
@@ -45,6 +47,7 @@ export function Header() {
             </NavButton>
           </Box>
         </Toolbar>
+        {status==="pending"&&<LinearProgress />}
       </AppBar>
     </Box>
   )

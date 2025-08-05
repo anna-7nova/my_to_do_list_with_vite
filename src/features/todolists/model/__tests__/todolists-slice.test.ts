@@ -5,6 +5,7 @@ import {
   removeTodolistTC,
   todolistsReducer,
   updateFilterTodolistAC,
+  updateTitleTodolistTC,
 } from '../todolists-slice'
 import { nanoid } from '@reduxjs/toolkit'
 
@@ -26,7 +27,10 @@ beforeEach(() => {
 test('correct todolist should be removed', () => {
   const endState = todolistsReducer(
     startState,
-    removeTodolistTC.fulfilled({ todoListId: todolistId1 }, '', { todoListId: todolistId1 }),
+    removeTodolistTC.fulfilled(
+      { todoListId: todolistId1 }, 
+      'requestId',
+       { todoListId: todolistId1 }),
   )
   expect(endState.length).toBe(1)
   expect(endState[0].id).toBe(todolistId2)
@@ -45,7 +49,7 @@ test('correct todolist should have the new result', () => {
   // '': уникальный ID запроса (можно передать пустую строку в тестах),
   // 'new title': аргументы, с которыми был вызван thunk
   //  )
-  const endState = todolistsReducer(startState, createNewTodolistTC.fulfilled(newTodolist, '', 'new title'))
+  const endState = todolistsReducer(startState, createNewTodolistTC.fulfilled(newTodolist, 'requestId', 'new title'))
   expect(endState.length).toBe(3)
   expect(endState[0].title).toBe('new title')
 })
@@ -64,7 +68,11 @@ test('correct todolist should update the name of the todolist', () => {
   // 2. Действие
   const endState = todolistsReducer(
     startState,
-    updateTitleTodolistAC({ todolistId: todolistId2, title: 'What to use' }),
+    updateTitleTodolistTC.fulfilled(
+      { id: todolistId2, title: 'What to use' },
+      'requestId',
+      { id: todolistId2, title: 'What to use' }
+    ),
   )
   expect(endState.length).toBe(2)
   expect(endState[1].title).toBe('What to use')

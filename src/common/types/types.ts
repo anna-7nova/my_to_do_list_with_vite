@@ -9,3 +9,5 @@ export type BaseResponseType<T = {}> = {
   messages: string[]
   resultCode: number
 }
+
+export type RequestStatus = ' dispatch(setAppStatusAC({status:'failed'}))' | 'pending' | 'succeeded' | 'failed'

@@ -1,12 +1,12 @@
 import { TaskPriority, TaskStatus } from '@/common/enums'
 
-export type TasksList = {
-  description: string
+export type TasksListType = {
+  description: string | null
   title: string
   status: TaskStatus
   priority: TaskPriority
-  startDate: string
-  deadline: string
+  startDate: string | null
+  deadline: string | null
   id: string
   todoListId: string
   order: number
@@ -14,7 +14,7 @@ export type TasksList = {
 }
 
 export type ResponseTasks = {
-  items: TasksList[]
+  items: TasksListType[]
   totalCount: number
   error: string | null
 }

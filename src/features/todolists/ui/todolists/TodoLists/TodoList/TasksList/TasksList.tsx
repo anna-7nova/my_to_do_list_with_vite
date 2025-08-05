@@ -7,15 +7,15 @@ import ListItem from '@mui/material/ListItem'
 import { taskListStylesSx } from './TasksList.styles'
 import { DomainTodolist } from '@/features/todolists/model/todolists-slice'
 import {
-  changeStatusTaskTC,
   getTasksTC,
   removeTaskTC,
   selectTasks,
-  updateTitleTaskTC,
+  updateTaskTC,
 } from '@/features/todolists/model/tasks-slice'
 import { EditableSpan } from '@/common/components'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { TaskStatus } from '@/common/enums'
+import type { TasksListType } from '@/features/todolists/api/tasksApi.types'
 
 type Props = {
   todolist: DomainTodolist
@@ -40,8 +40,8 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
     filteredTask = todolistTasks.filter((item) => item.status === TaskStatus.Completed)
   }
 
-  const changeTaskTitle = (taskId: string, value: string) =>
-    dispatch(updateTitleTaskTC({ todoListId: id, taskId: taskId, changeItem: value }))
+  const changeTaskTitle = (todolistTasks: TasksListType, value: string) =>
+    dispatch(updateTaskTC({ task: todolistTasks, changeItem: {title: value }}))
   return (
     <>
       {filteredTask?.length === 0 ? (
@@ -52,13 +52,13 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
             const removeTaskHandler = () => dispatch(removeTaskTC({ taskId: t.id, todoListId: id }))
             const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
               const newStatus = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-              dispatch(changeStatusTaskTC({ taskId: t.id, newStatus: newStatus, todoListId: id }))
+              dispatch(updateTaskTC({ task: t, changeItem: {status: newStatus}}))
             }
             return (
               <ListItem key={t.id} sx={taskListStylesSx(t.status === TaskStatus.Completed)}>
                 <div>
                   <Checkbox checked={t.status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
-                  <EditableSpan title={t.title} onClick={(value: string) => changeTaskTitle(t.id, value)} />
+                  <EditableSpan title={t.title} onClick={(value: string) => changeTaskTitle(t, value)} />
                 </div>
                 <IconButton onClick={removeTaskHandler} aria-label="delete">
                   <DeleteIcon />
