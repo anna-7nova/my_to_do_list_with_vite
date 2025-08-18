@@ -47,7 +47,7 @@ export function Header() {
             </NavButton>
           </Box>
         </Toolbar>
-        {status==="pending"&&<LinearProgress />}
+        {status==="loading"&&<LinearProgress />}
       </AppBar>
     </Box>
   )

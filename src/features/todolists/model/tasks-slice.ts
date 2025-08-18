@@ -1,8 +1,6 @@
-import { TaskStatus } from '@/common/enums'
 import { tasksApi } from '../api/tasksApi'
 import { createNewTodolistTC, removeTodolistTC } from './todolists-slice'
 import { TasksListType, UpdateTaskModel } from '../api/tasksApi.types'
-import { RootState } from '@/app/store'
 import { createAppSlice } from '@/common/utils/createAppSlice'
 import { setAppStatusAC } from '@/app/app-slice'
 
@@ -17,8 +15,7 @@ export const tasksSlice = createAppSlice({
     getTasksTC: create.asyncThunk(
       async (id: string, { rejectWithValue, dispatch }) => {
         try {
-          dispatch(setAppStatusAC({ status: 'pending' }))
-          await new Promise((resolve) => setTimeout(resolve, 2000))
+          dispatch(setAppStatusAC({ status: 'loading' }))
           const res = await tasksApi.getTasksList(id)
           dispatch(setAppStatusAC({ status: 'succeeded' }))
           return { tasks: res.data.items, todolistId: id }
@@ -36,8 +33,7 @@ export const tasksSlice = createAppSlice({
     createTaskTC: create.asyncThunk(
       async (args: { todoListId: string; title: string }, { rejectWithValue, dispatch }) => {
         try {
-          dispatch(setAppStatusAC({ status: 'pending' }))
-          await new Promise((resolve) => setTimeout(resolve, 2000))
+          dispatch(setAppStatusAC({ status: 'loading' }))
           const res = await tasksApi.createTask(args)
           dispatch(setAppStatusAC({ status: 'succeeded' }))
           return res.data.data.item
@@ -53,11 +49,14 @@ export const tasksSlice = createAppSlice({
       }
     ),
     removeTaskTC: create.asyncThunk(
-      async (args: { todoListId: string; taskId: string }, { rejectWithValue }) => {
+      async (args: { todoListId: string; taskId: string }, { rejectWithValue, dispatch }) => {
         try {
+          dispatch(setAppStatusAC({ status: 'loading' }))
           await tasksApi.deleteTask(args)
+          dispatch(setAppStatusAC({ status: 'succeeded' }))
           return args
         } catch (e) {
+          dispatch(setAppStatusAC({ status: 'failed' }))
           return rejectWithValue(e)
         }
       },
@@ -73,7 +72,7 @@ export const tasksSlice = createAppSlice({
         const { task, changeItem } = args
 
         const model: UpdateTaskModel = {
-          title: changeItem.title ? changeItem.title : task.title,
+          title: changeItem.title === undefined ? task.title : changeItem.title,
           description: task.description,
           status: changeItem.status === undefined ? task.status : changeItem.status,
           priority: task.priority,
@@ -81,11 +80,9 @@ export const tasksSlice = createAppSlice({
           deadline: task.deadline,
         }
         try {
-          dispatch(setAppStatusAC({ status: 'pending' }))
-          await new Promise((resolve) => setTimeout(resolve, 2000))
+          dispatch(setAppStatusAC({ status: 'loading' }))
           const res = await tasksApi.changeItem({ todoListId: task.todoListId, taskId: task.id, model: model })
           dispatch(setAppStatusAC({ status: 'succeeded' }))
-          debugger
           return res.data.data.item
         } catch (e) {
           dispatch(setAppStatusAC({ status: 'failed' }))

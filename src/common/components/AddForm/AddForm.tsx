@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField'
 
 type AddFormType = {
   createNewItem: (title: string) => void
+  disabled?: boolean
 }
 
 export const AddForm = (props: AddFormType) => {
@@ -39,7 +40,7 @@ export const AddForm = (props: AddFormType) => {
     }
   }
 
-  const IsAddTitleNamePossible = title.length <= 15
+  const IsAddTitleNamePossible = title.length <= 101
 
   const IsButtonDisabled = !IsAddTitleNamePossible || !title.length
 
@@ -54,8 +55,9 @@ export const AddForm = (props: AddFormType) => {
         variant="outlined"
         size={'small'}
         value={title}
+        disabled={props.disabled}
       />
-      <Button onClick={onClickHandler} variant="contained" disabled={IsButtonDisabled} sx={buttonStyled}>
+      <Button onClick={onClickHandler} variant="contained" disabled={IsButtonDisabled || props.disabled} sx={buttonStyled}>
         +
       </Button>
     </div>

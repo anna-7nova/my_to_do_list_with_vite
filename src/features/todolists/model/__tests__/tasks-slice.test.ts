@@ -82,11 +82,11 @@ test('correct list of task should be deleted 1 position', () => {
     startState,
     removeTaskTC.fulfilled(
       { taskId: startState[todolistId2][1].id, todoListId: todolistId2 },
-       'requestId', 
-       {
-      taskId: startState[todolistId2][1].id,
-      todoListId: todolistId2,
-    }),
+      'requestId',
+      {
+        taskId: startState[todolistId2][1].id,
+        todoListId: todolistId2,
+      }),
   )
 
   expect(endState[todolistId2].length).toBe(2)
@@ -122,28 +122,28 @@ test('correct list of task should change status of task', () => {
   const endState = tasksReducer(
     startState,
     updateTaskTC.fulfilled(
-      { task: startState[todolistId1][0], changeItem: {status: TaskStatus.Completed} },
+      startState[todolistId1][0] = {...startState[todolistId1][0], status: TaskStatus.New},
       'requestId',
-      { task: startState[todolistId1][0], changeItem: {status: TaskStatus.Completed} }
+      { task: startState[todolistId1][0], changeItem: { status: TaskStatus.New } }
     ),
   )
 
   expect(endState[todolistId1].length).toBe(3)
-  expect(endState[todolistId1][0].status).toBe(TaskStatus.Completed)
+  expect(endState[todolistId1][0].status).toBe(TaskStatus.New)
 })
 
 test('correct list of task should update the title', () => {
   const endState = tasksReducer(
     startState,
     updateTaskTC.fulfilled(
-      { task: startState[todolistId1][0], changeItem: {title: 'aaa'} },
+      startState[todolistId1][2] = {...startState[todolistId1][2], title: 'anna'},
       'requestId',
-      { task: startState[todolistId1][0], changeItem: {title: 'aaa'} },
+      { task: startState[todolistId1][2], changeItem: { title: 'anna' } },
     ),
   )
 
   expect(endState[todolistId1].length).toBe(3)
-  expect(endState[todolistId1][0].title).toBe('aaa')
+  expect(endState[todolistId1][2].title).toBe("anna")
 })
 
 test('array should be created for new todolist', () => {

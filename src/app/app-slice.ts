@@ -5,7 +5,8 @@ export const appSlice = createSlice({
   name: 'app',
   initialState: {
     mood: 'light' as MoodType,
-    status: 'idle' as RequestStatus
+    status: 'idle' as RequestStatus,
+    error: null as string | null,
   },
   reducers: (create) => ({
     switchMoodAC: create.reducer<{ mood: MoodType }>((state, action) => {
@@ -13,17 +14,20 @@ export const appSlice = createSlice({
     }),
     setAppStatusAC: create.reducer<{ status: RequestStatus }>((state, action) => {
       state.status = action.payload.status
-    })
+    }),
+    setAppErrorAC: create.reducer<{ error: string | null }>((state, action) => {
+      state.error = action.payload.error
+    }),
   }),
   selectors: {
     selectTheme: (state) => state.mood,
-    selectStatus: (state)=> state.status
+    selectStatus: (state) => state.status,
+    selectError: (state) => state.error
   },
 })
 
 export const appReducer = appSlice.reducer
-export const { switchMoodAC, setAppStatusAC } = appSlice.actions
-export const { selectTheme, selectStatus } = appSlice.selectors
+export const { switchMoodAC, setAppStatusAC, setAppErrorAC } = appSlice.actions
+export const { selectTheme, selectStatus, selectError } = appSlice.selectors
 
 export type MoodType = 'light' | 'dark'
-

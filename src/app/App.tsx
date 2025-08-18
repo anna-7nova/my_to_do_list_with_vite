@@ -3,7 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { getTheme } from '../common/theme/theme'
 import { Main } from './Main'
 import styles from './App.module.css'
-import { Header } from '@/common/components'
+import { ErrorSnackBar, Header } from '@/common/components'
 import { useAppSelector } from '@/common/hooks'
 import { selectTheme } from './app-slice'
 
@@ -14,6 +14,7 @@ export function App() {
       <ThemeProvider theme={getTheme(themeMood)}>
         <Header />
         <Main />
+        <ErrorSnackBar/>
         <CssBaseline />
       </ThemeProvider>
     </div>

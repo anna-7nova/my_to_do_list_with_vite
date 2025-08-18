@@ -8,6 +8,7 @@ type Props = {
   title: string
   onClick: () => void
   onChange: (title: string) => void
+  disabled?: boolean
 }
 
 export const TodoComponentHeader: React.FC<Props> = (props: Props) => {
@@ -17,7 +18,7 @@ export const TodoComponentHeader: React.FC<Props> = (props: Props) => {
         <h3>
           <EditableSpan title={props.title} onClick={props.onChange} />
         </h3>
-        <IconButton onClick={props.onClick} aria-label="delete">
+        <IconButton disabled={props.disabled} onClick={props.onClick} aria-label="delete">
           <DeleteOutlinedIcon />
         </IconButton>
       </Grid>

@@ -10,4 +10,5 @@ export type BaseResponseType<T = {}> = {
   resultCode: number
 }
 
-export type RequestStatus = ' dispatch(setAppStatusAC({status:'failed'}))' | 'pending' | 'succeeded' | 'failed'
+export type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
+
