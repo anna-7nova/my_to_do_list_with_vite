@@ -6,12 +6,7 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import { taskListStylesSx } from './TasksList.styles'
 import { DomainTodolist } from '@/features/todolists/model/todolists-slice'
-import {
-  getTasksTC,
-  removeTaskTC,
-  selectTasks,
-  updateTaskTC,
-} from '@/features/todolists/model/tasks-slice'
+import { getTasksTC, removeTaskTC, selectTasks, updateTaskTC } from '@/features/todolists/model/tasks-slice'
 import { EditableSpan } from '@/common/components'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { TaskStatus } from '@/common/enums'
@@ -22,7 +17,7 @@ type Props = {
 }
 
 export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
-  const { id, filter } = todolist
+  const { id, filter, entityStatus } = todolist
 
   const tasks = useAppSelector(selectTasks)
   const dispatch = useAppDispatch()
@@ -41,7 +36,7 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
   }
 
   const changeTaskTitle = (todolistTasks: TasksListType, value: string) =>
-    dispatch(updateTaskTC({ task: todolistTasks, changeItem: {title: value }}))
+    dispatch(updateTaskTC({ task: todolistTasks, changeItem: { title: value } }))
   return (
     <>
       {filteredTask?.length === 0 ? (
@@ -52,15 +47,23 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
             const removeTaskHandler = () => dispatch(removeTaskTC({ taskId: t.id, todoListId: id }))
             const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
               const newStatus = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-              dispatch(updateTaskTC({ task: t, changeItem: {status: newStatus}}))
+              dispatch(updateTaskTC({ task: t, changeItem: { status: newStatus } }))
             }
             return (
               <ListItem key={t.id} sx={taskListStylesSx(t.status === TaskStatus.Completed)}>
                 <div>
-                  <Checkbox checked={t.status === TaskStatus.Completed} onChange={changeTaskStatusHandler} />
-                  <EditableSpan title={t.title} onClick={(value: string) => changeTaskTitle(t, value)} />
+                  <Checkbox
+                    checked={t.status === TaskStatus.Completed}
+                    onChange={changeTaskStatusHandler}
+                    disabled={entityStatus === 'loading'}
+                  />
+                  <EditableSpan
+                    title={t.title}
+                    onClick={(value: string) => changeTaskTitle(t, value)}
+                    disabled={entityStatus === 'loading'}
+                  />
                 </div>
-                <IconButton onClick={removeTaskHandler} aria-label="delete">
+                <IconButton onClick={removeTaskHandler} aria-label="delete" disabled={entityStatus === 'loading'}>
                   <DeleteIcon />
                 </IconButton>
               </ListItem>

@@ -19,8 +19,8 @@ beforeEach(() => {
 
   // 1. Стартовый state
   startState = [
-    { id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0 },
-    { id: todolistId2, title: 'What to improve', filter: 'all', addedDate: '', order: 0 },
+    { id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle' },
+    { id: todolistId2, title: 'What to improve', filter: 'all', addedDate: '', order: 0, entityStatus: 'idle' },
   ]
 })
 
@@ -43,6 +43,7 @@ test('correct todolist should have the new result', () => {
     filter: 'all',
     addedDate: '',
     order: 0,
+    entityStatus: 'idle'
   }
   // createNewTodolistTC.fulfilled(
   // newTodolist:  что возвращает thunk при успехе,
@@ -52,6 +53,7 @@ test('correct todolist should have the new result', () => {
   const endState = todolistsReducer(startState, createNewTodolistTC.fulfilled(newTodolist, 'requestId', 'new title'))
   expect(endState.length).toBe(3)
   expect(endState[0].title).toBe('new title')
+  expect(endState[0].entityStatus).toBe('idle')
 })
 
 test('correct todolist should change filter to complete', () => {

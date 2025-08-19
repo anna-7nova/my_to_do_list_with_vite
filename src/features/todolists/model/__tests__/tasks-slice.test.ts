@@ -1,6 +1,5 @@
 import { beforeEach, expect, test } from 'vitest'
 import {
-  TasksType,
   createTaskTC,
   removeTaskTC,
   tasksReducer,
