@@ -1,17 +1,20 @@
 import { TaskPriority, TaskStatus } from '@/common/enums'
+import * as z from 'zod'
 
-export type TasksListType = {
-  description: string | null
-  title: string
-  status: TaskStatus
-  priority: TaskPriority
-  startDate: string | null
-  deadline: string | null
-  id: string
-  todoListId: string
-  order: number
-  addedDate: string
-}
+export const TaskListSchema = z.object({
+  description: z.string().nullable(),
+  title: z.string(),
+  status: z.enum(TaskStatus),
+  priority: z.enum(TaskPriority),
+  startDate: z.string().nullable(),
+  deadline: z.string().nullable(),
+  id: z.string(),
+  todoListId: z.string(),
+  order: z.int(),
+  addedDate: z.iso.datetime({ local: true }),
+})
+
+export type TasksListType = z.infer<typeof TaskListSchema>
 
 export type ResponseTasks = {
   items: TasksListType[]

@@ -4,4 +4,8 @@ export const taskListStylesSx = (isDone: boolean): SxProps => ({
   display: 'flex',
   justifyContent: 'space-between',
   opacity: isDone ? 0.5 : 1,
+
+  '& .addedDate': {
+    fontSize: "11px",
+  }
 })

@@ -11,6 +11,7 @@ import { EditableSpan } from '@/common/components'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { TaskStatus } from '@/common/enums'
 import type { TasksListType } from '@/features/todolists/api/tasksApi.types'
+import { de } from 'zod/v4/locales'
 
 type Props = {
   todolist: DomainTodolist
@@ -49,6 +50,7 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
               const newStatus = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
               dispatch(updateTaskTC({ task: t, changeItem: { status: newStatus } }))
             }
+             const addedDate = new Date(t.addedDate).toLocaleString()
             return (
               <ListItem key={t.id} sx={taskListStylesSx(t.status === TaskStatus.Completed)}>
                 <div>
@@ -62,6 +64,7 @@ export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
                     onClick={(value: string) => changeTaskTitle(t, value)}
                     disabled={entityStatus === 'loading'}
                   />
+                  <span className="addedDate"> - {addedDate}</span>
                 </div>
                 <IconButton onClick={removeTaskHandler} aria-label="delete" disabled={entityStatus === 'loading'}>
                   <DeleteIcon />

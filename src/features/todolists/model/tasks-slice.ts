@@ -1,6 +1,6 @@
 import { tasksApi } from '../api/tasksApi'
 import { createNewTodolistTC, removeTodolistTC } from './todolists-slice'
-import { TasksListType, UpdateTaskModel } from '../api/tasksApi.types'
+import { TaskListSchema, TasksListType, UpdateTaskModel } from '../api/tasksApi.types'
 import { createAppSlice } from '@/common/utils/createAppSlice'
 import { setAppStatusAC } from '@/app/app-slice'
 import { ResultCode } from '@/common/enums/enums'
@@ -20,11 +20,12 @@ export const tasksSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
           const res = await tasksApi.getTasksList(id)
+          TaskListSchema.array().parse(res.data.items)//zod validation
           dispatch(setAppStatusAC({ status: 'succeeded' }))
           return { tasks: res.data.items, todolistId: id }
-        } catch (e) {
-          dispatch(setAppStatusAC({ status: 'failed' }))
-          return rejectWithValue(e)
+        } catch (error) {
+          handleServerError(error, dispatch)
+          return rejectWithValue(error)
         }
       },
       {

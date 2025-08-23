@@ -38,9 +38,9 @@ export const todolistsSlice = createAppSlice({
           const res = await todolistsApi.getTodolists()
           dispatch(setAppStatusAC({ status: 'succeeded' }))
           return { todolists: res.data }
-        } catch (e) {
-          dispatch(setAppStatusAC({ status: 'failed' }))
-          return rejectWithValue(e)
+        } catch (error) {
+          handleServerError(error, dispatch)
+          return rejectWithValue(error)
         }
       },
       {
