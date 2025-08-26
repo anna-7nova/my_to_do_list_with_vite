@@ -13,8 +13,8 @@ export function App() {
     <div className={styles.app}>
       <ThemeProvider theme={getTheme(themeMood)}>
         <Header />
-        <Routing/>
-        <ErrorSnackBar/>
+        <Routing />
+        <ErrorSnackBar />
         <CssBaseline />
       </ThemeProvider>
     </div>

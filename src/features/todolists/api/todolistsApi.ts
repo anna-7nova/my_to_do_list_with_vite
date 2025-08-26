@@ -1,14 +1,14 @@
 import { instance } from '@/common/instance/instance'
-import { TodoList } from './todolistsApi.types'
-import { BaseResponseType } from '@/common/types'
+import { TodoList, TodolistCreateResponse } from './todolistsApi.types'
+import { DefaultResponse } from '@/common/types'
 
 export const todolistsApi = {
   getTodolists: () => instance.get<TodoList[]>('/todo-lists'),
   createTodolist: (title: string) =>
-    instance.post<BaseResponseType<{ item: TodoList }>>('/todo-lists', {
+    instance.post<TodolistCreateResponse>('/todo-lists', {
       title,
     }),
-  deleteTodolist: (id: string) => instance.delete<BaseResponseType>(`/todo-lists/${id}`),
+  deleteTodolist: (id: string) => instance.delete<DefaultResponse>(`/todo-lists/${id}`),
   changeTodolistTitle: ({ id, title }: { id: string; title: string }) =>
-    instance.put<BaseResponseType>(`/todo-lists/${id}`, { title }),
+    instance.put<DefaultResponse>(`/todo-lists/${id}`, { title }),
 }

@@ -16,7 +16,7 @@ export const TodoComponentHeader: React.FC<Props> = (props: Props) => {
     <div className={'container'}>
       <Grid container sx={gridContaiter}>
         <h3>
-          <EditableSpan title={props.title} onClick={props.onChange} disabled={props.disabled}/>
+          <EditableSpan title={props.title} onClick={props.onChange} disabled={props.disabled} />
         </h3>
         <IconButton disabled={props.disabled} onClick={props.onClick} aria-label="delete">
           <DeleteOutlinedIcon />

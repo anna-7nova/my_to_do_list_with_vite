@@ -1,8 +1,8 @@
-import { TodoList } from '../api/todolistsApi.types'
+import { TodoList, TodolistCreateResponseSchema, TodoListSchema } from '../api/todolistsApi.types'
 import { todolistsApi } from '../api/todolistsApi'
 import { createAppSlice } from '@/common/utils/createAppSlice'
 import { setAppStatusAC } from '@/app/app-slice'
-import { RequestStatus } from '@/common/types'
+import { DefaultResponseTypeSchema, RequestStatus } from '@/common/types'
 import { ResultCode } from '@/common/enums/enums'
 import { handleServerError } from '@/common/utils/handleServerError/handleServerError'
 import { handleServerAppError } from '@/common/utils/handleServerAppError/handleServerAppError'
@@ -36,6 +36,7 @@ export const todolistsSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
           const res = await todolistsApi.getTodolists()
+          TodoListSchema.array().parse(res.data) //zod validation
           dispatch(setAppStatusAC({ status: 'succeeded' }))
           return { todolists: res.data }
         } catch (error) {
@@ -55,6 +56,7 @@ export const todolistsSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
           const res = await todolistsApi.createTodolist(title)
+          TodolistCreateResponseSchema.parse(res.data) //zod validation
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: 'succeeded' }))
             return res.data.data.item
@@ -85,6 +87,7 @@ export const todolistsSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
           const res = await todolistsApi.changeTodolistTitle(args)
+          DefaultResponseTypeSchema.parse(res.data) //zod
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: 'succeeded' }))
             return args
@@ -111,8 +114,8 @@ export const todolistsSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
           dispatch(setEntityStatusAC({ todolistId: arg.todoListId, entityStatus: 'loading' }))
-          await new Promise((resolve) => setTimeout(resolve, 2000))
           const res = await todolistsApi.deleteTodolist(arg.todoListId)
+          DefaultResponseTypeSchema.parse(res.data) //zod
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: 'succeeded' }))
             return arg

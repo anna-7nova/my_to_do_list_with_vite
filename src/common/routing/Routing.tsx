@@ -6,7 +6,7 @@ import { PageNotFound } from '../components/PageNotFound'
 export const Path = {
   Main: '/',
   Login: 'login',
-  NotFound: '*'
+  NotFound: '*',
 } as const
 
 export const Routing = () => (

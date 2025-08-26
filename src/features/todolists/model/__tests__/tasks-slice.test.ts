@@ -1,10 +1,5 @@
 import { beforeEach, expect, test } from 'vitest'
-import {
-  createTaskTC,
-  removeTaskTC,
-  tasksReducer,
-  updateTaskTC,
-} from '../tasks-slice'
+import { createTaskTC, removeTaskTC, tasksReducer, updateTaskTC } from '../tasks-slice'
 import { nanoid } from '@reduxjs/toolkit'
 import { TaskPriority, TaskStatus } from '@/common/enums'
 import { createNewTodolistTC, removeTodolistTC } from '../todolists-slice'
@@ -33,21 +28,21 @@ beforeEach(() => {
         title: 'HTML&CSS',
         status: TaskStatus.Completed,
         todoListId: todolistId1,
-        ...taskDefaultValues
+        ...taskDefaultValues,
       },
       {
         id: nanoid(),
         title: 'JS',
         status: TaskStatus.Completed,
         todoListId: todolistId1,
-        ...taskDefaultValues
+        ...taskDefaultValues,
       },
       {
         id: nanoid(),
         title: 'React',
         status: TaskStatus.New,
         todoListId: todolistId1,
-        ...taskDefaultValues
+        ...taskDefaultValues,
       },
     ],
     [todolistId2]: [
@@ -56,21 +51,21 @@ beforeEach(() => {
         title: 'English',
         status: TaskStatus.Completed,
         todoListId: todolistId2,
-        ...taskDefaultValues
+        ...taskDefaultValues,
       },
       {
         id: nanoid(),
         title: 'CV',
         status: TaskStatus.Completed,
         todoListId: todolistId2,
-        ...taskDefaultValues
+        ...taskDefaultValues,
       },
       {
         id: nanoid(),
         title: 'Cover letter',
         status: TaskStatus.New,
         todoListId: todolistId2,
-        ...taskDefaultValues
+        ...taskDefaultValues,
       },
     ],
   }
@@ -79,13 +74,10 @@ beforeEach(() => {
 test('correct list of task should be deleted 1 position', () => {
   const endState = tasksReducer(
     startState,
-    removeTaskTC.fulfilled(
-      { taskId: startState[todolistId2][1].id, todoListId: todolistId2 },
-      'requestId',
-      {
-        taskId: startState[todolistId2][1].id,
-        todoListId: todolistId2,
-      }),
+    removeTaskTC.fulfilled({ taskId: startState[todolistId2][1].id, todoListId: todolistId2 }, 'requestId', {
+      taskId: startState[todolistId2][1].id,
+      todoListId: todolistId2,
+    }),
   )
 
   expect(endState[todolistId2].length).toBe(2)
@@ -121,9 +113,9 @@ test('correct list of task should change status of task', () => {
   const endState = tasksReducer(
     startState,
     updateTaskTC.fulfilled(
-      startState[todolistId1][0] = {...startState[todolistId1][0], status: TaskStatus.New},
+      (startState[todolistId1][0] = { ...startState[todolistId1][0], status: TaskStatus.New }),
       'requestId',
-      { task: startState[todolistId1][0], changeItem: { status: TaskStatus.New } }
+      { task: startState[todolistId1][0], changeItem: { status: TaskStatus.New } },
     ),
   )
 
@@ -135,22 +127,25 @@ test('correct list of task should update the title', () => {
   const endState = tasksReducer(
     startState,
     updateTaskTC.fulfilled(
-      startState[todolistId1][2] = {...startState[todolistId1][2], title: 'anna'},
+      (startState[todolistId1][2] = { ...startState[todolistId1][2], title: 'anna' }),
       'requestId',
       { task: startState[todolistId1][2], changeItem: { title: 'anna' } },
     ),
   )
 
   expect(endState[todolistId1].length).toBe(3)
-  expect(endState[todolistId1][2].title).toBe("anna")
+  expect(endState[todolistId1][2].title).toBe('anna')
 })
 
 test('array should be created for new todolist', () => {
-  const endState = tasksReducer(startState, createNewTodolistTC.fulfilled(
-    { id: nanoid(), title: 'new todolist', addedDate: '', order: 0 },
-    'requestId',
-    'new todolist'
-  ))
+  const endState = tasksReducer(
+    startState,
+    createNewTodolistTC.fulfilled(
+      { id: nanoid(), title: 'new todolist', addedDate: '', order: 0 },
+      'requestId',
+      'new todolist',
+    ),
+  )
 
   const keys = Object.keys(endState)
   const newKey = keys.find((k) => k !== todolistId1 && k !== todolistId2)
@@ -163,11 +158,10 @@ test('array should be created for new todolist', () => {
 })
 
 test('property with todolistId should be deleted', () => {
-  const endState = tasksReducer(startState, removeTodolistTC.fulfilled(
-    { todoListId: todolistId2 },
-    'requestId',
-    { todoListId: todolistId2 }
-  ))
+  const endState = tasksReducer(
+    startState,
+    removeTodolistTC.fulfilled({ todoListId: todolistId2 }, 'requestId', { todoListId: todolistId2 }),
+  )
 
   const keys = Object.keys(endState)
 

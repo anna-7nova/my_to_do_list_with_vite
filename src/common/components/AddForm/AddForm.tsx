@@ -57,7 +57,12 @@ export const AddForm = (props: AddFormType) => {
         value={title}
         disabled={props.disabled}
       />
-      <Button onClick={onClickHandler} variant="contained" disabled={IsButtonDisabled || props.disabled} sx={buttonStyled}>
+      <Button
+        onClick={onClickHandler}
+        variant="contained"
+        disabled={IsButtonDisabled || props.disabled}
+        sx={buttonStyled}
+      >
         +
       </Button>
     </div>

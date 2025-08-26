@@ -22,7 +22,7 @@ export const appSlice = createSlice({
   selectors: {
     selectTheme: (state) => state.mood,
     selectStatus: (state) => state.status,
-    selectError: (state) => state.error
+    selectError: (state) => state.error,
   },
 })
 

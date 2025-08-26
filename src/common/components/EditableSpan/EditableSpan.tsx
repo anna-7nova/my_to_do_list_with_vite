@@ -20,7 +20,7 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value)
   }
-  return editMode&&!props.disabled ? (
+  return editMode && !props.disabled ? (
     <input onChange={onChangeHandler} value={value} onBlur={onClickHandler} autoFocus />
   ) : (
     <span onDoubleClick={onClickHandler}>{props.title}</span>

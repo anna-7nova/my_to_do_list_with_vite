@@ -30,9 +30,9 @@ export const TodoList: React.FC<Props> = ({ todolist }: Props) => {
               title={todolist.title}
               onClick={removeTodoListHandler}
               onChange={changeTodoListTitleHandler}
-              disabled = {todolist.entityStatus==='loading'}
+              disabled={todolist.entityStatus === 'loading'}
             />
-            <AddForm createNewItem={addNewTaskHandler}  disabled = {todolist.entityStatus==='loading'}/>
+            <AddForm createNewItem={addNewTaskHandler} disabled={todolist.entityStatus === 'loading'} />
             <TasksList todolist={todolist} />
             <FiltersButtons todolist={todolist} />
           </CardContent>

@@ -27,10 +27,7 @@ beforeEach(() => {
 test('correct todolist should be removed', () => {
   const endState = todolistsReducer(
     startState,
-    removeTodolistTC.fulfilled(
-      { todoListId: todolistId1 }, 
-      'requestId',
-       { todoListId: todolistId1 }),
+    removeTodolistTC.fulfilled({ todoListId: todolistId1 }, 'requestId', { todoListId: todolistId1 }),
   )
   expect(endState.length).toBe(1)
   expect(endState[0].id).toBe(todolistId2)
@@ -43,7 +40,7 @@ test('correct todolist should have the new result', () => {
     filter: 'all',
     addedDate: '',
     order: 0,
-    entityStatus: 'idle'
+    entityStatus: 'idle',
   }
   // createNewTodolistTC.fulfilled(
   // newTodolist:  что возвращает thunk при успехе,
@@ -70,11 +67,10 @@ test('correct todolist should update the name of the todolist', () => {
   // 2. Действие
   const endState = todolistsReducer(
     startState,
-    updateTitleTodolistTC.fulfilled(
-      { id: todolistId2, title: 'What to use' },
-      'requestId',
-      { id: todolistId2, title: 'What to use' }
-    ),
+    updateTitleTodolistTC.fulfilled({ id: todolistId2, title: 'What to use' }, 'requestId', {
+      id: todolistId2,
+      title: 'What to use',
+    }),
   )
   expect(endState.length).toBe(2)
   expect(endState[1].title).toBe('What to use')

@@ -6,6 +6,6 @@ export const taskListStylesSx = (isDone: boolean): SxProps => ({
   opacity: isDone ? 0.5 : 1,
 
   '& .addedDate': {
-    fontSize: "11px",
-  }
+    fontSize: '11px',
+  },
 })
