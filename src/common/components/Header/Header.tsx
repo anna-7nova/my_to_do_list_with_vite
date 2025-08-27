@@ -14,16 +14,22 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { selectStatus, selectTheme, switchMoodAC } from '@/app/app-slice'
 import { NavButton } from '..'
+import { logoutTC, selectIsLoggedIn } from '@/features/auth/model/auth-slice'
 
 export function Header() {
   const theme = useTheme()
   const themeMood = useAppSelector(selectTheme)
   const dispatch = useAppDispatch()
+
+  const status = useAppSelector(selectStatus)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
+
   //switch
   const switchMoodHandler = () => {
     dispatch(switchMoodAC({ mood: themeMood === 'light' ? 'dark' : 'light' }))
   }
-  const status = useAppSelector(selectStatus)
+
+  const onClickHandler = () => dispatch(logoutTC())
   return (
     <Box sx={{ flexGrow: 1, paddingBottom: '80px' }}>
       <AppBar position="fixed">
@@ -36,12 +42,11 @@ export function Header() {
           </Typography>
           <Box sx={{ display: 'flex', gap: '10px' }}>
             <FormControlLabel control={<Switch onChange={switchMoodHandler} />} label="Theme" onChange={() => {}} />
-            <NavButton backgroundcolor={theme.palette.primary.light} color="inherit" variant="outlined">
-              Login
-            </NavButton>
-            <NavButton color="inherit" variant="outlined">
-              LogOut
-            </NavButton>
+            {isLoggedIn && (
+              <NavButton onClick={onClickHandler} color="inherit" variant="outlined">
+                Sign out
+              </NavButton>
+            )}
             <NavButton color="inherit" variant="outlined">
               FAQ
             </NavButton>
