@@ -6,6 +6,7 @@ import { LoginInputs } from './authSchema'
 import { ResultCode } from '@/common/enums/enums'
 import { handleServerAppError } from '@/common/utils/handleServerAppError/handleServerAppError'
 import { AUTH_TOKEN } from '@/common/constants'
+import { clearDataAC } from '@/common/actions'
 
 export const authSlice = createAppSlice({
   name: 'auth',
@@ -42,6 +43,7 @@ export const authSlice = createAppSlice({
           const res = await authApi.logout()
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: 'succeeded' }))
+            dispatch(clearDataAC())
             localStorage.removeItem(AUTH_TOKEN)
             return { isLoggedIn: false }
           } else {
@@ -80,7 +82,7 @@ export const authSlice = createAppSlice({
         fulfilled: (state, action) => {
           state.isLoggedIn = action.payload.isLoggedIn
         },
-      }
+      },
     ),
   }),
   selectors: {
@@ -88,7 +90,7 @@ export const authSlice = createAppSlice({
   },
 })
 
-export const { loginTC , logoutTC, initializeAppTC} = authSlice.actions
+export const { loginTC, logoutTC, initializeAppTC } = authSlice.actions
 
 export const authReducer = authSlice.reducer
 

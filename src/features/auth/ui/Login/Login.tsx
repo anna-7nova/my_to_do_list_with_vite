@@ -13,17 +13,13 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import s from './Login.module.css'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginInputs, LoginSchema } from '../../model/authSchema'
-import { loginTC, selectIsLoggedIn } from '../../model/auth-slice'
-import { Navigate } from 'react-router'
-import { Path } from '@/common/routing/Routing'
+import { loginTC } from '../../model/auth-slice'
 
 export const Login = () => {
   const themeMode = useAppSelector(selectTheme)
   const theme = getTheme(themeMode)
 
   const dispatch = useAppDispatch()
-
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const {
     register,
@@ -38,10 +34,9 @@ export const Login = () => {
 
   const onSubmit: SubmitHandler<LoginInputs> = (data) => {
     dispatch(loginTC(data))
-    reset()
+      .unwrap()
+      .then(() => reset()) //reset only when success response
   }
-
-  if (isLoggedIn) return <Navigate to={Path.Main} />
 
   return (
     <Grid container justifyContent={'center'}>

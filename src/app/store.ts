@@ -9,7 +9,7 @@ export const store = configureStore({
     [tasksSlice.name]: tasksReducer,
     [todolistsSlice.name]: todolistsReducer,
     [appSlice.name]: appReducer,
-    [authSlice.name]: authReducer
+    [authSlice.name]: authReducer,
   },
 })
 

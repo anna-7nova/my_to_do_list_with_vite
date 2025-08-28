@@ -6,6 +6,7 @@ import { DefaultResponseTypeSchema, RequestStatus } from '@/common/types'
 import { ResultCode } from '@/common/enums/enums'
 import { handleServerError } from '@/common/utils/handleServerError/handleServerError'
 import { handleServerAppError } from '@/common/utils/handleServerAppError/handleServerAppError'
+import { clearDataAC } from '@/common/actions'
 
 export type DomainTodolist = TodoList & {
   filter: FilterValuesType
@@ -137,6 +138,11 @@ export const todolistsSlice = createAppSlice({
       },
     ),
   }),
+  extraReducers: (builder) => {
+    builder.addCase(clearDataAC, () => {
+      return []
+    })
+  },
   selectors: {
     selectTodolists: (state) => state,
   },

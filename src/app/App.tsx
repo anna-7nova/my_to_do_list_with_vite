@@ -1,4 +1,4 @@
-import { ThemeProvider} from '@mui/material/styles'
+import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import { getTheme } from '../common/theme/theme'
 import styles from './App.module.css'
@@ -23,7 +23,7 @@ export function App() {
   if (!isInitialized) {
     return (
       <div className={styles.circularProgressContainer}>
-        <CircularProgress color='inherit' size={150} thickness={3} />
+        <CircularProgress color="inherit" size={150} thickness={3} />
       </div>
     )
   }

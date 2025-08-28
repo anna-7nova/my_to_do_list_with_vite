@@ -15,6 +15,8 @@ import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { selectStatus, selectTheme, switchMoodAC } from '@/app/app-slice'
 import { NavButton } from '..'
 import { logoutTC, selectIsLoggedIn } from '@/features/auth/model/auth-slice'
+import { NavLink } from 'react-router'
+import { Path } from '@/common/routing/Routing'
 
 export function Header() {
   const theme = useTheme()
@@ -47,7 +49,7 @@ export function Header() {
                 Sign out
               </NavButton>
             )}
-            <NavButton color="inherit" variant="outlined">
+            <NavButton disabled={!isLoggedIn} component={NavLink} to={Path.Faq} color="inherit" variant="outlined">
               FAQ
             </NavButton>
           </Box>

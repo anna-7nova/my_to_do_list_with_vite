@@ -7,6 +7,7 @@ import { ResultCode } from '@/common/enums/enums'
 import { handleServerAppError } from '@/common/utils/handleServerAppError/handleServerAppError'
 import { handleServerError } from '@/common/utils/handleServerError/handleServerError'
 import { DefaultResponseTypeSchema } from '@/common/types'
+import { clearDataAC } from '@/common/actions'
 
 export type TasksType = {
   [todolistId: string]: Array<TasksListType>
@@ -99,7 +100,6 @@ export const tasksSlice = createAppSlice({
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
           const res = await tasksApi.changeItem({ todoListId: task.todoListId, taskId: task.id, model: model })
-          debugger
           TaskOperationResponseSchema.parse(res.data) //zod
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: 'succeeded' }))
@@ -130,6 +130,9 @@ export const tasksSlice = createAppSlice({
       })
       .addCase(removeTodolistTC.fulfilled, (state, action) => {
         delete state[action.payload.todoListId]
+      })
+      .addCase(clearDataAC, () => {
+        return {}
       })
   },
   selectors: {
