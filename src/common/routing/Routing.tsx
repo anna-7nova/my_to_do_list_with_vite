@@ -3,9 +3,10 @@ import { Login } from '@/features/auth/ui/Login/Login'
 import { Route, Routes } from 'react-router'
 import { PageNotFound } from '../components/PageNotFound'
 import { useAppSelector } from '../hooks'
-import { selectIsLoggedIn } from '@/features/auth/model/auth-slice'
+
 import { Faq } from '../components/Faq/Faq'
 import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute'
+import { selectIsLoggedIn } from '@/app/app-slice'
 
 export const Path = {
   Main: '/',

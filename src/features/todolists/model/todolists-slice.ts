@@ -1,4 +1,4 @@
-import { TodoList, TodolistCreateResponseSchema, TodoListSchema } from '../api/todolistsApi.types'
+import { DomainTodolist, FilterValuesType, TodolistCreateResponseSchema, TodoListSchema } from '../api/todolistsApi.types'
 import { todolistsApi } from '../api/todolistsApi'
 import { createAppSlice } from '@/common/utils/createAppSlice'
 import { setAppStatusAC } from '@/app/app-slice'
@@ -7,13 +7,6 @@ import { ResultCode } from '@/common/enums/enums'
 import { handleServerError } from '@/common/utils/handleServerError/handleServerError'
 import { handleServerAppError } from '@/common/utils/handleServerAppError/handleServerAppError'
 import { clearDataAC } from '@/common/actions'
-
-export type DomainTodolist = TodoList & {
-  filter: FilterValuesType
-  entityStatus: RequestStatus
-}
-
-export type FilterValuesType = 'all' | 'active' | 'completed'
 
 export const todolistsSlice = createAppSlice({
   name: 'todolists',

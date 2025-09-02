@@ -21,3 +21,10 @@ export const DefaultResponseTypeSchema = BaseResponseTypeSchema(z.object({}))
 export type DefaultResponse = z.infer<typeof DefaultResponseTypeSchema>
 
 export type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
+
+export type BaseResponseType<T> = {
+  data: T
+  fieldsErrors: FieldError[]
+  messages: string[]
+  resultCode: number
+}

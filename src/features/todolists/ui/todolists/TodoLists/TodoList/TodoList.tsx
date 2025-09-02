@@ -5,21 +5,18 @@ import { FiltersButtons } from './FiltersButtons/FiltersButtons'
 import { TasksList } from './TasksList/TasksList'
 import { TodoComponentHeader } from './TodoComponentHeader/TodoComponentHeader'
 import { cardStyle } from './TodoList.styles'
-import { DomainTodolist, removeTodolistTC, updateTitleTodolistTC } from '@/features/todolists/model/todolists-slice'
-import { createTaskTC } from '@/features/todolists/model/tasks-slice'
 import { AddForm } from '@/common/components'
-import { useAppDispatch } from '@/common/hooks'
+import { DomainTodolist } from '@/features/todolists/api/todolistsApi.types'
+import { useCreateTaskMutation } from '@/features/todolists/api/tasksApi'
 
 type Props = {
   todolist: DomainTodolist
 }
 
 export const TodoList: React.FC<Props> = ({ todolist }: Props) => {
-  const dispatch = useAppDispatch()
-  //handlers
-  const removeTodoListHandler = () => dispatch(removeTodolistTC({ todoListId: todolist.id }))
-  const changeTodoListTitleHandler = (title: string) => dispatch(updateTitleTodolistTC({ id: todolist.id, title }))
-  const addNewTaskHandler = (title: string) => dispatch(createTaskTC({ title, todoListId: todolist.id }))
+  const [createTaskMutation] = useCreateTaskMutation()
+
+  const addNewTaskHandler = (title: string) => createTaskMutation({ title, todoListId: todolist.id })
 
   return (
     <div className="todoList">
@@ -28,8 +25,7 @@ export const TodoList: React.FC<Props> = ({ todolist }: Props) => {
           <CardContent>
             <TodoComponentHeader
               title={todolist.title}
-              onClick={removeTodoListHandler}
-              onChange={changeTodoListTitleHandler}
+              id={todolist.id}
               disabled={todolist.entityStatus === 'loading'}
             />
             <AddForm createNewItem={addNewTaskHandler} disabled={todolist.entityStatus === 'loading'} />

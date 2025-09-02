@@ -21,7 +21,7 @@ export const tasksSlice = createAppSlice({
       async (id: string, { rejectWithValue, dispatch }) => {
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
-          const res = await tasksApi.getTasksList(id)
+          const res = await _tasksApi.getTasksList(id)
           ResponseTasksSchema.parse(res.data) //zod validation
           dispatch(setAppStatusAC({ status: 'succeeded' }))
           return { tasks: res.data.items, todolistId: id }
@@ -40,7 +40,7 @@ export const tasksSlice = createAppSlice({
       async (args: { todoListId: string; title: string }, { rejectWithValue, dispatch }) => {
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
-          const res = await tasksApi.createTask(args)
+          const res = await _tasksApi.createTask(args)
           TaskOperationResponseSchema.parse(res.data) //zod
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: 'succeeded' }))
@@ -64,7 +64,7 @@ export const tasksSlice = createAppSlice({
       async (args: { todoListId: string; taskId: string }, { rejectWithValue, dispatch }) => {
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
-          const res = await tasksApi.deleteTask(args)
+          const res = await _tasksApi.deleteTask(args)
           DefaultResponseTypeSchema.parse(res.data) //zod
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: 'succeeded' }))
@@ -99,7 +99,7 @@ export const tasksSlice = createAppSlice({
         }
         try {
           dispatch(setAppStatusAC({ status: 'loading' }))
-          const res = await tasksApi.changeItem({ todoListId: task.todoListId, taskId: task.id, model: model })
+          const res = await _tasksApi.changeItem({ todoListId: task.todoListId, taskId: task.id, model: model })
           TaskOperationResponseSchema.parse(res.data) //zod
           if (res.data.resultCode === ResultCode.Success) {
             dispatch(setAppStatusAC({ status: 'succeeded' }))

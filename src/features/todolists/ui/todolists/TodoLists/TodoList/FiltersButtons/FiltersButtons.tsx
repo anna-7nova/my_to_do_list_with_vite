@@ -1,7 +1,8 @@
 import Button from '@mui/material/Button'
 import type React from 'react'
-import { DomainTodolist, FilterValuesType, updateFilterTodolistAC } from '@/features/todolists/model/todolists-slice'
+import {  updateFilterTodolistAC } from '@/features/todolists/model/todolists-slice'
 import { useAppDispatch } from '@/common/hooks'
+import { DomainTodolist, FilterValuesType } from '@/features/todolists/api/todolistsApi.types'
 
 type Props = {
   todolist: DomainTodolist

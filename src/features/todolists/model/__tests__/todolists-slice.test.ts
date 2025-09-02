@@ -1,13 +1,13 @@
 import { test, expect, beforeEach } from 'vitest'
 import {
   createNewTodolistTC,
-  DomainTodolist,
   removeTodolistTC,
   todolistsReducer,
   updateFilterTodolistAC,
   updateTitleTodolistTC,
 } from '../todolists-slice'
 import { nanoid } from '@reduxjs/toolkit'
+import { DomainTodolist } from '../../api/todolistsApi.types'
 
 let todolistId1: string
 let todolistId2: string

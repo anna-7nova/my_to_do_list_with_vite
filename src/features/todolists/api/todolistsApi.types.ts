@@ -1,4 +1,4 @@
-import { BaseResponseTypeSchema } from '@/common/types'
+import { BaseResponseTypeSchema, RequestStatus } from '@/common/types'
 import * as z from 'zod'
 
 export const TodoListSchema = z.object({
@@ -18,3 +18,10 @@ export const TodolistCreateResponseSchema = BaseResponseTypeSchema(
 )
 
 export type TodolistCreateResponse = z.infer<typeof TodolistCreateResponseSchema>
+
+export type DomainTodolist = TodoList & {
+  filter: FilterValuesType
+  entityStatus: RequestStatus
+}
+
+export type FilterValuesType = 'all' | 'active' | 'completed'

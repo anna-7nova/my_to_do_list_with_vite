@@ -12,11 +12,14 @@ import { useTheme } from '@mui/material'
 import LinearProgress from '@mui/material/LinearProgress'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
-import { selectStatus, selectTheme, switchMoodAC } from '@/app/app-slice'
+import { selectIsLoggedIn, selectStatus, selectTheme, setIsLoggedInAC, switchMoodAC } from '@/app/app-slice'
 import { NavButton } from '..'
-import { logoutTC, selectIsLoggedIn } from '@/features/auth/model/auth-slice'
 import { NavLink } from 'react-router'
 import { Path } from '@/common/routing/Routing'
+import { useLogoutMutation } from '@/features/auth/api/authApi'
+import { ResultCode } from '@/common/enums/enums'
+import { clearDataAC } from '@/common/actions'
+import { AUTH_TOKEN } from '@/common/constants'
 
 export function Header() {
   const theme = useTheme()
@@ -26,12 +29,24 @@ export function Header() {
   const status = useAppSelector(selectStatus)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
+  const [logoutMutation] = useLogoutMutation()
+
   //switch
   const switchMoodHandler = () => {
     dispatch(switchMoodAC({ mood: themeMood === 'light' ? 'dark' : 'light' }))
   }
 
-  const onClickHandler = () => dispatch(logoutTC())
+  const logoutHandler  = () => {
+    logoutMutation()
+      .unwrap()
+      .then((data) => {
+        if (data?.resultCode === ResultCode.Success) {
+          dispatch(clearDataAC())
+          localStorage.removeItem(AUTH_TOKEN)
+          dispatch(setIsLoggedInAC({ isLoggedIn: false }))
+        }
+      })
+  }
   return (
     <Box sx={{ flexGrow: 1, paddingBottom: '80px' }}>
       <AppBar position="fixed">
@@ -45,7 +60,7 @@ export function Header() {
           <Box sx={{ display: 'flex', gap: '10px' }}>
             <FormControlLabel control={<Switch onChange={switchMoodHandler} />} label="Theme" onChange={() => {}} />
             {isLoggedIn && (
-              <NavButton onClick={onClickHandler} color="inherit" variant="outlined">
+              <NavButton onClick={logoutHandler} color="inherit" variant="outlined">
                 Sign out
               </NavButton>
             )}

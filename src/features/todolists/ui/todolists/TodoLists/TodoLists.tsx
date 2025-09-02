@@ -1,15 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { TodoList } from './TodoList/TodoList'
-import { useAppDispatch, useAppSelector } from '@/common/hooks'
-import { getTodolistTC, selectTodolists } from '@/features/todolists/model/todolists-slice'
+
+import { useGetTodolistsQuery } from '@/features/todolists/api/todolistsApi'
 
 export const TodoLists: React.FC = () => {
-  const todolists = useAppSelector(selectTodolists)
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch(getTodolistTC())
-  }, [])
+  const { data: todolists } = useGetTodolistsQuery()
 
   return (
     <>

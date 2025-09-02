@@ -1,13 +1,12 @@
 import { Container, Grid } from '@mui/material'
 import React from 'react'
-import { createNewTodolistTC } from '@/features/todolists/model/todolists-slice'
 import { TodoLists } from '@/features/todolists/ui/todolists/TodoLists/TodoLists'
 import { AddForm } from '@/common/components'
-import { useAppDispatch } from '@/common/hooks'
+import { useCreateTodolistMutation } from '@/features/todolists/api/todolistsApi'
 
 export const Main: React.FC = () => {
-  const dispatch = useAppDispatch()
-  const createNewTodoList = (title: string) => dispatch(createNewTodolistTC(title))
+  const [createTodolistMutation] = useCreateTodolistMutation()
+  const createNewTodoList = (title: string) => createTodolistMutation(title)
 
   return (
     <Container fixed maxWidth={'xl'}>

@@ -4,11 +4,12 @@ import { getTheme } from '../common/theme/theme'
 import styles from './App.module.css'
 import { ErrorSnackBar, Header } from '@/common/components'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
-import { selectTheme } from './app-slice'
+import { selectTheme, setIsLoggedInAC } from './app-slice'
 import { Routing } from '@/common/routing'
 import { useEffect, useState } from 'react'
-import { initializeAppTC } from '@/features/auth/model/auth-slice'
 import CircularProgress from '@mui/material/CircularProgress'
+import { useMeQuery } from '@/features/auth/api/authApi'
+import { ResultCode } from '@/common/enums/enums'
 
 export function App() {
   const [isInitialized, setIsInitialized] = useState(false)
@@ -16,9 +17,15 @@ export function App() {
   const themeMood = useAppSelector(selectTheme)
   const dispatch = useAppDispatch()
 
+  const { data, isLoading } = useMeQuery()
+
   useEffect(() => {
-    dispatch(initializeAppTC()).finally(() => setIsInitialized(true))
-  }, [])
+    if (isLoading) return
+    if (data?.resultCode === ResultCode.Success) {
+      dispatch(setIsLoggedInAC({ isLoggedIn: true }))
+    }
+    setIsInitialized(true)
+  }, [isLoading])
 
   if (!isInitialized) {
     return (
