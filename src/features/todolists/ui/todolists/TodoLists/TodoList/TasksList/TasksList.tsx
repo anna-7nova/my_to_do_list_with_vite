@@ -3,6 +3,7 @@ import { useGetTasksListQuery } from '@/features/todolists/api/tasksApi'
 import { TaskItems } from './TaskItem/TaskItem'
 import { DomainTodolist } from '@/features/todolists/api/todolistsApi.types'
 import { TaskStatus } from '@/common/enums'
+import { TasksSkeleton } from './TasksSkeleton/TasksSkeleton'
 
 type Props = {
   todolist: DomainTodolist
@@ -11,15 +12,17 @@ type Props = {
 export const TasksList: React.FC<Props> = ({ todolist }: Props) => {
   const { id, filter } = todolist
 
-  const { data: todolistTasks } = useGetTasksListQuery(id)
+  const { data: todolistTasks, isLoading } = useGetTasksListQuery(id)
 
   let filteredTask = todolistTasks?.items
   if (filter === 'active') {
-    filteredTask = todolistTasks?.filter((item) => item.status === TaskStatus.New)
+    filteredTask = filteredTask?.filter((item) => item.status === TaskStatus.New)
   }
   if (filter === 'completed') {
-    filteredTask = todolistTasks?.filter((item) => item.status === TaskStatus.Completed)
+    filteredTask = filteredTask?.filter((item) => item.status === TaskStatus.Completed)
   }
+
+  if(isLoading) return (<TasksSkeleton/>)
 
   return (
     <>

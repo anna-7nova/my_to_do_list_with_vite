@@ -1,8 +1,8 @@
 import Button from '@mui/material/Button'
 import type React from 'react'
-import {  updateFilterTodolistAC } from '@/features/todolists/model/todolists-slice'
 import { useAppDispatch } from '@/common/hooks'
 import { DomainTodolist, FilterValuesType } from '@/features/todolists/api/todolistsApi.types'
+import { todolistsApi } from '@/features/todolists/api/todolistsApi'
 
 type Props = {
   todolist: DomainTodolist
@@ -13,7 +13,12 @@ export const FiltersButtons: React.FC<Props> = ({ todolist }: Props) => {
   const dispatch = useAppDispatch()
 
   const changeTodoListFilterHandler = (filter: FilterValuesType) => {
-    dispatch(updateFilterTodolistAC({ todolistId: id, filter }))
+    dispatch(todolistsApi.util.updateQueryData('getTodolists', undefined, (data)=> {
+      const todolist = data.find((t) => t.id === id)
+      if (todolist) {
+        todolist.filter = filter
+      }
+    }))
   }
   return (
     <div>

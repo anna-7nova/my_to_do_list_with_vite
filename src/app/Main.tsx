@@ -1,4 +1,5 @@
-import { Container, Grid } from '@mui/material'
+import { Container } from '@mui/material'
+import Grid from '@mui/material/Grid'
 import React from 'react'
 import { TodoLists } from '@/features/todolists/ui/todolists/TodoLists/TodoLists'
 import { AddForm } from '@/common/components'

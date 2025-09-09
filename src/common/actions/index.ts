@@ -1,1 +1,0 @@
-export { clearDataAC } from './actions'

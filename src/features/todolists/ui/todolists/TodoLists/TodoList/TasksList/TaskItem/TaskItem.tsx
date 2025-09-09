@@ -10,6 +10,9 @@ import { useChangeItemMutation, useDeleteTaskMutation } from '@/features/todolis
 import { TaskStatus } from '@/common/enums'
 import { DomainTodolist } from '@/features/todolists/api/todolistsApi.types'
 import { taskListStylesSx } from '../TasksList.styles'
+import { useAppDispatch } from '@/common/hooks'
+import { todolistsApi } from '@/features/todolists/api/todolistsApi'
+import { RequestStatus } from '@/common/types'
 
 type Props = {
   filteredTask: TasksListType[] | undefined
@@ -19,6 +22,8 @@ type Props = {
 export const TaskItems: React.FC<Props> = ({ filteredTask, todolist }: Props) => {
   const [deleteTaskMutation] = useDeleteTaskMutation()
   const [changeItemMutation] = useChangeItemMutation()
+
+  const dispatch = useAppDispatch()
 
   const { id, entityStatus } = todolist
 
@@ -36,10 +41,24 @@ export const TaskItems: React.FC<Props> = ({ filteredTask, todolist }: Props) =>
     changeItemMutation({ todoListId: task.todoListId, taskId: task.id, model })
   }
 
+  const changeTodolistStatus = (entityStatus: RequestStatus) => {
+    dispatch(
+      todolistsApi.util.updateQueryData("getTodolists", undefined, (state) => {
+        const index = state.findIndex((el) => el.id === id)
+      if (index !== -1) state[index].entityStatus = entityStatus
+      }),
+    )
+  }
+
   return (
     <List>
       {filteredTask?.map((t) => {
-        const removeTaskHandler = () => deleteTaskMutation({ taskId: t.id, todoListId: id })
+        const removeTaskHandler = () => {
+          changeTodolistStatus('loading')
+          deleteTaskMutation({ taskId: t.id, todoListId: id })
+          .unwrap()
+          .catch(()=>changeTodolistStatus('failed'))
+        }
         const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
           const newStatus = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
           const model = createModel({ changeItem: { status: newStatus }, task: t })

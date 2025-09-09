@@ -18,8 +18,8 @@ import { NavLink } from 'react-router'
 import { Path } from '@/common/routing/Routing'
 import { useLogoutMutation } from '@/features/auth/api/authApi'
 import { ResultCode } from '@/common/enums/enums'
-import { clearDataAC } from '@/common/actions'
 import { AUTH_TOKEN } from '@/common/constants'
+import { baseApi } from '@/app/baseApi'
 
 export function Header() {
   const theme = useTheme()
@@ -41,11 +41,11 @@ export function Header() {
       .unwrap()
       .then((data) => {
         if (data?.resultCode === ResultCode.Success) {
-          dispatch(clearDataAC())
           localStorage.removeItem(AUTH_TOKEN)
           dispatch(setIsLoggedInAC({ isLoggedIn: false }))
         }
       })
+      .then(()=>baseApi.util.invalidateTags(['Todolist', 'Task']))
   }
   return (
     <Box sx={{ flexGrow: 1, paddingBottom: '80px' }}>
