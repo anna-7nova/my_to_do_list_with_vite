@@ -1,6 +1,12 @@
 import { instance } from '@/common/instance/instance'
-import { ResponseTasks, TaskOperationResponse, UpdateTaskModel } from './tasksApi.types'
-import { DefaultResponse } from '@/common/types'
+import {
+  ResponseTasks,
+  ResponseTasksSchema,
+  TaskOperationResponse,
+  TaskOperationResponseSchema,
+  UpdateTaskModel,
+} from './tasksApi.types'
+import { DefaultResponse, DefaultResponseTypeSchema } from '@/common/types'
 import { baseApi } from '@/app/baseApi'
 
 export const tasksApi = baseApi.injectEndpoints({
@@ -10,6 +16,7 @@ export const tasksApi = baseApi.injectEndpoints({
         method: 'get',
         url: `/todo-lists/${id}/tasks`,
       }),
+      extraOptions: { dataSchema: ResponseTasksSchema },
       providesTags: ['Task'],
     }),
     createTask: builder.mutation<TaskOperationResponse, { todoListId: string; title: string }>({
@@ -18,6 +25,7 @@ export const tasksApi = baseApi.injectEndpoints({
         url: `/todo-lists/${todoListId}/tasks`,
         body: { title },
       }),
+      extraOptions: { dataSchema: TaskOperationResponseSchema },
       invalidatesTags: ['Task'],
     }),
     deleteTask: builder.mutation<DefaultResponse, { todoListId: string; taskId: string }>({
@@ -25,6 +33,7 @@ export const tasksApi = baseApi.injectEndpoints({
         method: 'delete',
         url: `/todo-lists/${todoListId}/tasks/${taskId}`,
       }),
+      extraOptions: { dataSchema: DefaultResponseTypeSchema },
       invalidatesTags: ['Task'],
     }),
     changeItem: builder.mutation<TaskOperationResponse, { todoListId: string; taskId: string; model: UpdateTaskModel }>(
@@ -34,6 +43,7 @@ export const tasksApi = baseApi.injectEndpoints({
           url: `/todo-lists/${todoListId}/tasks/${taskId}`,
           body: model,
         }),
+        extraOptions: { dataSchema: TaskOperationResponseSchema },
         invalidatesTags: ['Task'],
       },
     ),

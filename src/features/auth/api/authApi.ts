@@ -1,4 +1,3 @@
-import { instance } from '@/common/instance/instance'
 import { AuthMeType, AuthType, LoginInputs } from './authApi.types'
 import { DefaultResponse } from '@/common/types'
 import { baseApi } from '@/app/baseApi'
@@ -15,7 +14,7 @@ export const authApi = baseApi.injectEndpoints({
       query: (payload) => ({
         method: 'post',
         url: '/auth/login',
-        body: payload ,
+        body: payload,
       }),
     }),
     logout: builder.mutation<DefaultResponse, void>({
@@ -27,6 +26,4 @@ export const authApi = baseApi.injectEndpoints({
   }),
 })
 
-export const {useMeQuery, useLoginMutation, useLogoutMutation} = authApi
-
-
+export const { useMeQuery, useLoginMutation, useLogoutMutation } = authApi
