@@ -43,9 +43,9 @@ export const TaskItems: React.FC<Props> = ({ filteredTask, todolist }: Props) =>
 
   const changeTodolistStatus = (entityStatus: RequestStatus) => {
     dispatch(
-      todolistsApi.util.updateQueryData("getTodolists", undefined, (state) => {
+      todolistsApi.util.updateQueryData('getTodolists', undefined, (state) => {
         const index = state.findIndex((el) => el.id === id)
-      if (index !== -1) state[index].entityStatus = entityStatus
+        if (index !== -1) state[index].entityStatus = entityStatus
       }),
     )
   }
@@ -56,8 +56,8 @@ export const TaskItems: React.FC<Props> = ({ filteredTask, todolist }: Props) =>
         const removeTaskHandler = () => {
           changeTodolistStatus('loading')
           deleteTaskMutation({ taskId: t.id, todoListId: id })
-          .unwrap()
-          .catch(()=>changeTodolistStatus('failed'))
+            .unwrap()
+            .catch(() => changeTodolistStatus('failed'))
         }
         const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
           const newStatus = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New

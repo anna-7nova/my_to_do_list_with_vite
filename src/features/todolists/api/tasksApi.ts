@@ -8,16 +8,19 @@ import {
 } from './tasksApi.types'
 import { DefaultResponse, DefaultResponseTypeSchema } from '@/common/types'
 import { baseApi } from '@/app/baseApi'
+import { PAGE_SIZE } from '@/common/constants'
 
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTasksList: builder.query<ResponseTasks, string>({
-      query: (id) => ({
+    getTasksList: builder.query<ResponseTasks, {id:string, params: {page:number}}>({
+      query: ({id, params}) => ({
         method: 'get',
         url: `/todo-lists/${id}/tasks`,
+        params: {...params, count: PAGE_SIZE}
       }),
       extraOptions: { dataSchema: ResponseTasksSchema },
-      providesTags: (_res, _error, todolistId) => [{ type: 'Task', id: todolistId }],
+      providesTags: (_res, _error, {id}) => [{ type: 'Task', id }],
+      keepUnusedDataFor: 120,
     }),
     createTask: builder.mutation<TaskOperationResponse, { todoListId: string; title: string }>({
       query: ({ todoListId, title }) => ({
