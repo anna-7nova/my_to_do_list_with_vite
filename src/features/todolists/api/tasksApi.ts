@@ -12,14 +12,14 @@ import { PAGE_SIZE } from '@/common/constants'
 
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTasksList: builder.query<ResponseTasks, {id:string, params: {page:number}}>({
-      query: ({id, params}) => ({
+    getTasksList: builder.query<ResponseTasks, { id: string; params: { page: number } }>({
+      query: ({ id, params }) => ({
         method: 'get',
         url: `/todo-lists/${id}/tasks`,
-        params: {...params, count: PAGE_SIZE}
+        params: { ...params, count: PAGE_SIZE },
       }),
       extraOptions: { dataSchema: ResponseTasksSchema },
-      providesTags: (_res, _error, {id}) => [{ type: 'Task', id }],
+      providesTags: (_res, _error, { id }) => [{ type: 'Task', id }],
       keepUnusedDataFor: 120,
     }),
     createTask: builder.mutation<TaskOperationResponse, { todoListId: string; title: string }>({
@@ -46,6 +46,32 @@ export const tasksApi = baseApi.injectEndpoints({
           url: `/todo-lists/${todoListId}/tasks/${taskId}`,
           body: model,
         }),
+        onQueryStarted: async ({ todoListId, taskId, model }, { dispatch, queryFulfilled, getState }) => {
+          const args = tasksApi.util.selectCachedArgsForQuery(getState(), 'getTasksList')
+          const patchResults: any[] = []
+
+          args.forEach((arg) => {
+            patchResults.push(
+              dispatch(
+                tasksApi.util.updateQueryData(
+                  'getTasksList',
+                  { id: todoListId, params: { page: arg.params.page } },
+                  (state) => {
+                    const index = state.items.findIndex((el) => el.id === taskId)
+                    if (index !== -1) state.items[index] = { ...state.items[index], ...model }
+                  },
+                ),
+              ),
+            )
+          })
+          try {
+            await queryFulfilled
+          } catch (err) {
+            patchResults.forEach((patchResult) => {
+              patchResult.undo()
+            })
+          }
+        },
         extraOptions: { dataSchema: TaskOperationResponseSchema },
         invalidatesTags: (_res, _error, args) => [{ type: 'Task', id: args.todoListId }],
       },
